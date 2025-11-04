@@ -44,10 +44,17 @@ body {
     width: 4rem;
     height: 4rem;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
 #quadradosquared {
-    background-color: #F97316;
-    border: 1px solid #ffffff;
+    border: 2px solid #ffffff;
+    height: 2rem;
+    width: 2rem;
 }
 h2 {
     color: #ffffff;
