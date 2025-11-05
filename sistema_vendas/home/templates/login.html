@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static '\css\login.css' %}">
+</head>
+<body>
+    <div class="loginDiv">
+        <div class="loginText">
+            <div id="quadrado">
+                <div id="quadradosquared">
+                    
+                </div>
+            </div>
+            <h2>Login</h2>
+            <h4>Entre com suas credenciais</h4>
+        </div>
+        <form name="formLogin" id="formLogin" onsubmit="">
+            <div>
+                <label for="email" hidden>Usuario</label>
+                <input name="email" id="emailInput" class="fromInput" type="email" placeholder="usuário" required>
+            </div>
+            <div>
+                <label for="senha" hidden>Senha</label>
+                <input name="senha" id="senhaInput" class="formInput" type="password" placeholder="senha" required>
+            </div>
+            <div>
+                <button name="botaoLogin" id="botaoLogin" class="formButton" type="submit">Entrar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
