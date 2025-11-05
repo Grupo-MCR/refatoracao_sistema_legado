@@ -124,5 +124,5 @@ class Compra(models.Model):
         ordering = ['-data_compra']
 
     def __str__(self):
-        return f"Compra #{self.numero_pedido} - {self.fornecedor}"j
+        return f"Compra #{self.numero_pedido} - {self.fornecedor}"
       
