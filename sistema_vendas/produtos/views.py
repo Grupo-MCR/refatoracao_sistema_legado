@@ -12,13 +12,11 @@ def consulta_produto(request):
     """
     return render(request, 'consulta_produto.html')
 
-
 def cadastro_produto(request):
     """
     Renderiza a página de cadastro/edição de produtos
     """
     return render(request, 'cadastro_edicao_produto.html')
-
 
 @require_http_methods(["GET"])
 def listar_produtos(request):

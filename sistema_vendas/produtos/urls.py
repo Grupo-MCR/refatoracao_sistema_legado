@@ -6,7 +6,7 @@ app_name = 'produtos'
 urlpatterns = [
     # Página de consulta
     path('consulta/', views.consulta_produto, name='consulta_produto'),
-    
+  
     # Página de cadastro/edição
     path('cadastro/', views.cadastro_produto, name='cadastro_produto'),
     
