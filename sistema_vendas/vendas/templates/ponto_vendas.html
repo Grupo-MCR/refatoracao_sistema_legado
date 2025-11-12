@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ponto de Vendas</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <h2>Sistema</h2>
+      <ul>
+        <li class="active"><i class="fa-solid fa-cash-register"></i> Ponto de Vendas</li>
+        <li><i class="fa-solid fa-credit-card"></i> Pagamentos</li>
+        <li><i class="fa-solid fa-box"></i> Produtos</li>
+        <li><i class="fa-solid fa-user"></i> Clientes</li>
+        <li><i class="fa-solid fa-truck"></i> Fornecedores</li>
+        <li><i class="fa-solid fa-users"></i> Funcionários</li>
+        <li><i class="fa-solid fa-receipt"></i> Vendas</li>
+        <li><i class="fa-solid fa-chart-line"></i> Relatório</li>
+      </ul>
+    </div>
+    <div class="logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</div>
+  </div>
+
+  <div class="content">
+    <h1>Ponto de Vendas</h1>
+
+    <div class="box">
+      <label>CPF</label>
+      <input type="text" placeholder="000.000.000-00">
+      <button><i class="fa-solid fa-magnifying-glass"></i></button>
+      <label>Data</label>
+      <input type="date" value="2025-10-21">
+      <label>Nome</label>
+      <input type="text" placeholder="Pesquise o cliente pelo CPF">
+    </div>
+
+    <div class="box">
+      <label>Código</label>
+      <input type="text" placeholder="000">
+      <button><i class="fa-solid fa-magnifying-glass"></i></button>
+      <label>Produto</label>
+      <input type="text" placeholder="Pesquise pelo código">
+      <label>Preço</label>
+      <input type="text" placeholder="0,00">
+      <label>Quantidade</label>
+      <input type="number" min="1" value="0">
+      <button><i class="fa-solid fa-plus"></i></button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Produto</th>
+          <th>Quantidade</th>
+          <th>Preço</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="5" class="empty">Nenhum item adicionado</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <div class="total-box">
+        <p>TOTAL DA VENDA: <span>R$ 0,00</span></p>
+      </div>
+      <div>
+        <button class="btn btn-orange">PAGAMENTO</button>
+        <button class="btn btn-cancel">CANCELAR VENDA</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
