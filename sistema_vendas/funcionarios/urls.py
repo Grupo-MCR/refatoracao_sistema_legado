@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('cadastrar/', views.CadastrarFuncionario, name="cadastrar"),
-    #path('editar/', views.EditarFuncionario, name="editar"),
+    path('editar/id=<int:id>', views.EditarFuncionario, name="editar"),
 ]
