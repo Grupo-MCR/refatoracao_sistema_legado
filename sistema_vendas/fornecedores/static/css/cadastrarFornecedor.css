@@ -1,3 +1,6 @@
+/* ===================== */
+/* ESTILO GERAL */
+/* ===================== */
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +18,9 @@ body {
   height: 100vh;
 }
 
-/* SIDEBAR */
+/* ===================== */
+/* MENU LATERAL */
+/* ===================== */
 .sidebar {
   width: 230px;
   background-color: #181818;
@@ -69,7 +74,9 @@ body {
   color: #ff7b00;
 }
 
+/* ===================== */
 /* CONTEÚDO PRINCIPAL */
+/* ===================== */
 .content {
   flex: 1;
   background-color: #1e1e1e;
@@ -82,7 +89,9 @@ h1 {
   font-weight: 500;
 }
 
-/* FORMULÁRIO */
+/* ===================== */
+/* FORMULÁRIOS */
+/* ===================== */
 .form {
   display: flex;
   flex-direction: column;
@@ -122,6 +131,9 @@ input::placeholder {
   color: #777;
 }
 
+/* ===================== */
+/* BOTÕES */
+/* ===================== */
 .btn {
   background-color: #ff7b00;
   color: #fff;
@@ -133,8 +145,162 @@ input::placeholder {
   width: 200px;
   align-self: center;
   transition: 0.3s;
+  text-decoration: none;
+  text-align: center;
 }
 
 .btn:hover {
   background-color: #e56f00;
+}
+
+/* Botões da lista de fornecedores */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.btn-editar {
+  background-color: #444;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.btn-editar:hover {
+  background-color: #ff7b00;
+}
+
+/* ===================== */
+/* LISTAGEM EM TABELA */
+/* ===================== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #111;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.table th, 
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #ff7b00;
+  color: #fff;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.table tr:nth-child(even) {
+  background-color: #1c1c1c;
+}
+
+.table tr:hover {
+  background-color: #2a2a2a;
+}
+
+/* ===================== */
+/* CARTÕES (para futuras telas) */
+/* ===================== */
+.supplier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.supplier-card {
+  background-color: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.supplier-info h3 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.info-row {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.info-row p {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.actions-card {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  background-color: #ff7b00;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.edit-btn:hover {
+  background-color: #e56f00;
+}
+
+.delete-btn {
+  background-color: #333;
+}
+
+.delete-btn:hover {
+  background-color: #444;
+}
+
+/* ===================== */
+/* RESPONSIVIDADE */
+/* ===================== */
+@media (max-width: 900px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 180px;
+  }
+
+  .content {
+    padding: 30px 20px;
+  }
+
+  .table th, 
+  .table td {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn {
+    width: 100%;
+  }
 }
