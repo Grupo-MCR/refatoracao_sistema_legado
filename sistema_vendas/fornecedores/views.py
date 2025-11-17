@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.middleware import csrf
 
 # Cadastro de fornecedor (já existente)
-def CadastrarFuncionario(request):
+def cadastrar_funcionario(request):
     if request.method == 'GET':
         csrf.get_token(request)
         template = loader.get_template('cadastrarFornecedor.html')
@@ -14,10 +14,10 @@ def CadastrarFuncionario(request):
 
 
 # Tela inicial - listagem de fornecedores
-def home_fornecedor(request):
+def consulta_fornecedor(request):
     if request.method == 'GET':
         csrf.get_token(request)
-        template = loader.get_template('homeFornecedor.html')
+        template = loader.get_template('consultaFornecedor.html')
         return HttpResponse(template.render())
     else:
         return HttpResponseBadRequest("método de request inválido :c")
