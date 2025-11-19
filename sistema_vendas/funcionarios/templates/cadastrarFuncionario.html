@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '\css\cadastrarFuncionario.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Cadastrar Novo Funcionário</title>
+</head>
+<body>
+
+    <aside>
+		<div class="logo">
+			<h3>Sistema</h2>
+		</div>
+		
+		<nav>
+			<ul>
+				<li id="navPDV">
+					<a href="/dashboard">
+						<i class="fa-regular fa-credit-card"></i>
+						Ponto de Vendas
+					</a>
+				</li>
+                <li id="navVendas">
+					<a href="/dashboard">
+						<i class="fa-solid fa-bag-shopping"></i>
+						Vendas
+					</a>
+				</li>
+                <li id="navProdutos">
+					<a href="/dashboard">
+						<i class="fa-solid fa-boxes-stacked"></i>
+                        Produtos
+					</a>
+				</li>
+                <li id="navClientes">
+					<a href="/dashboard">
+						<i class="fa-solid fa-users"></i>
+						Clientes
+					</a>
+				</li>
+                <li id="navFornecedores">
+					<a href="/dashboard">
+						<i class="fa-solid fa-truck"></i>
+						Fornecedores
+					</a>
+				</li>
+                <li id="navFuncionarios">
+					<a href="/dashboard" id="navFuncionariosText">
+						<i class="fa-solid fa-user-tie"></i>
+						Funcionarios
+					</a>
+				</li>
+                <li id="navCompras">
+					<a href="/dashboard">
+						<i class="fa-solid fa-boxes-packing"></i>
+						Compras
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+        <div class="logout">
+			<a href="/login">
+				<i class="fas fa-arrow-left"></i>
+				Sair
+			</a>
+		</div>
+	</aside>
+
+    <main>
+    
+        <header>
+            <h2>Cadastrar Novo Funcionário</h2>
+            <p class="sub">Preencha os dados do Funcionário para cadastrá-lo no sistema.</p>
+        </header>
+
+        <form onsubmit="mandarFuncionario(event)" id="cadFuncionario">
+
+            <div id="nomeFuncionarioDiv" class="inputDiv">
+                <label>Nome do Funcionario</label>
+                <input type="object" name="nome" id="nomeFuncionarioInput" class="funcionarioInput" placeholder="Nome do Funcionário" required>
+            </div>
+
+            <div id="cpfFuncionarioDiv" class="inputDiv">
+                <label>CPF do Funcionário</label>
+                <input type="text" name="cpf" id="propritarioFuncionarioInput" class="funcionarioInput" placeholder="000.000.000-00" maxlength="18" required>
+            </div>
+
+            <div id="emailFuncionarioDeiv" class="inputDiv">
+                <label>Email do Funcionario</label>
+                <input type="email" name="email" id="emailFuncionarioInput" class="funcionarioInput" placeholder="exemplo@email.com" required>
+            </div>
+
+            <div id="rgFuncionarioDiv" class="inputDiv">
+                <label>RG do Funcionario</label>
+                <input type="text" name="rg" id="rgFuncionarioInput" class="funcionarioInput" placeholder="0.000.000" maxlength="18" required>
+            </div>
+
+            <div id="senhaFuncionarioDiv" class="inputDiv">
+                <label>Senha do Funcionario</label>
+                <input type"text" name="senha" id="senhaFuncionarioInput" class="funcionarioInput"  placeholder="senha" required>
+            </div>
+
+            <div id="telefoneFuncionarioDiv" class="inputDiv">
+                <label>Telefone Fixo do proprietário (opcional)</label>
+                <input type="tel" name="telefone" class="funcionarioInput" id="telefoneFuncionarioInput" placeholder="00 0000-0000">
+            </div>
+
+            <div id="nivelAcessoSelect" class="inputDiv">
+                <label>Selecione o Nível de Acesso do Funcionário</label>
+                <select type="text" id="nivelAcessoFuncionarioInput" name="nivelAcessoSelect" class="funcionarioInput">
+                    <option value="0">Usuário</option>
+                    <option value="1">Adminstrador</option>
+                </select>
+            </div>
+
+            <div id="celularFuncionarioDiv" class="inputDiv">
+                <label>Telefone Celular do proprietário (opcional)</label>
+                <input type="tel" name="celular" class="funcionarioInput" id="celularFuncionarioInput" placeholder="00 0000-0000">
+            </div>
+
+            <div id="cargoFuncionarioDiv" class="inputDiv">
+                <label>Cargo do Funcionario</label>
+                <input type="text" name="cargo" id="cargoFuncionarioInput" class="funcionarioInput" placeholder="caixa ;P" required>
+            </div>
+
+            <hr id="coolAssLine"/>
+
+            <h3 id="subtituloEndereco">Dados de endereço do Funcionário</h3>
+
+            <div id="ruaFuncionarioDiv" class="inputDiv">
+                <label>Rua</label>
+                <input type="text" name="rua" id="ruaFuncionarioInput" class="funcionarioInput" placeholder="Nome da rua" required>
+            </div>
+
+            <div id="numeroFuncionarioDiv" class="inputDiv">
+                <label>Número</label>
+                <input type="text" name="numero" id="numeroFuncionarioInput" class="funcionarioInput" placeholder="Número da casa" required>
+            </div>
+
+            <div id="bairroFuncionarioDiv" class="inputDiv">
+                <label>Bairro</label>
+                <input type="text" name="loteamento" id="bairroFuncionarioInput" class="funcionarioInput" placeholder="Nome do bariro" required>
+            </div>
+
+            <div id="cepFuncionarioDiv" class="inputDiv">
+                <label>CEP</label>
+                <input type="text" name="CEP" id="cepFuncionarioInput" class="funcionarioInput" placeholder="00000-000" required>
+            </div>
+
+            <div id="cidadeFuncionarioDiv" class="inputDiv">
+                <label>Cidade</label>
+                <input type="text" name="cidade"id="cidadeFuncionarioInput" class="funcionarioInput" placeholder="Cidade" required>
+            </div>
+
+            <div id="estadoFuncionarioDiv" class="inputDiv">
+                <label>Estado</label>
+                <select type="text" name="estado" id="estadoFuncionarioInput" class="funcionarioInput" placeholder="Escolha um estado">
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espirito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernanbuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RR">Roraima</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+            </div>
+
+            <div class="form-footer" id="botaoCadastroDiv">
+                <button type="submit"id="botaoEnviar" class="btn-cadastrar">Cadastrar</button>
+            </div>
+        </form>
+
+    </main>
+    
+    <footer>
+        copiraite 2025
+    </footer>
+</body>
+</html>
