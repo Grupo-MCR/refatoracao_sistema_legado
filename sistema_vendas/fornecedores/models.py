@@ -3,8 +3,8 @@ from django.core.validators import MinValueValidator
 from django.utils import timezone
 from decimal import Decimal
 
-# Create your models here.
 
+# Modelos existentes...
 class Fornecedor(models.Model):
     nome = models.CharField(max_length=100)
     cnpj = models.CharField(max_length=100)
@@ -37,7 +37,7 @@ class Compra(models.Model):
         ('concluida', 'Concluída'),
         ('cancelada', 'Cancelada'),
     ]
-
+    
     numero_pedido = models.CharField(
         max_length=50,
         unique=True,
@@ -125,4 +125,61 @@ class Compra(models.Model):
 
     def __str__(self):
         return f"Compra #{self.numero_pedido} - {self.fornecedor}"
-      
+
+
+class ItemCompra(models.Model):
+    """
+    Model para registrar os itens de uma compra.
+    """
+    
+    compra = models.ForeignKey(
+        Compra,
+        on_delete=models.CASCADE,
+        related_name='itens',
+        help_text="Compra à qual o item pertence"
+    )
+    
+    produto = models.ForeignKey(
+        'produtos.Produto',
+        on_delete=models.PROTECT,
+        related_name='itens_compra',
+        help_text="Produto comprado"
+    )
+    
+    quantidade = models.IntegerField(
+        validators=[MinValueValidator(1)],
+        help_text="Quantidade do produto"
+    )
+    
+    preco_unitario = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text="Preço unitário do produto no momento da compra"
+    )
+    
+    subtotal = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
+        help_text="Subtotal do item (quantidade × preço unitário)"
+    )
+    
+    criado_em = models.DateTimeField(auto_now_add=True)
+    atualizado_em = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'itens_compra'
+        verbose_name = 'Item de Compra'
+        verbose_name_plural = 'Itens de Compra'
+        ordering = ['id']
+
+    def __str__(self):
+        return f"{self.produto.descricao} - {self.quantidade}x R$ {self.preco_unitario}"
+    
+    def save(self, *args, **kwargs):
+        """
+        Sobrescreve o método save para calcular automaticamente o subtotal
+        """
+        self.subtotal = Decimal(str(self.quantidade)) * self.preco_unitario
+        super().save(*args, **kwargs)
