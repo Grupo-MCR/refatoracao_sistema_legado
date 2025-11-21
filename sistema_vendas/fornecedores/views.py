@@ -8,11 +8,8 @@ import json
 from .compraService import CompraService
 from .models import Fornecedor
 
-
-# ==================== VIEWS DE INTERFACE (HTML ) ====================
-
-# Cadastro de fornecedor
-def CadastrarFuncionario(request):
+# Cadastro de fornecedor (já existente)
+def cadastrar_fornecedor(request):
     if request.method == 'GET':
         csrf.get_token(request)
         template = loader.get_template('cadastrarFornecedor.html')
@@ -21,7 +18,7 @@ def CadastrarFuncionario(request):
         return HttpResponseBadRequest("método de request inválido :c")
 
 # Tela inicial - listagem de fornecedores
-def home_fornecedor(request):
+def consulta_fornecedor(request):
     if request.method == 'GET':
         csrf.get_token(request)
         template = loader.get_template('consultaFornecedor.html')

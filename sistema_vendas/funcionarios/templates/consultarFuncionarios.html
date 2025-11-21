@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '\css\consultarFuncionarios.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Cadastrar Novo Funcionário</title>
+</head>
+<body>
+
+    <aside>
+		<div class="logo">
+			<h3>Sistema</h2>
+		</div>
+		
+		<nav>
+			<ul>
+				<li id="navPDV">
+					<a href="/dashboard">
+						<i class="fa-regular fa-credit-card"></i>
+						Ponto de Vendas
+					</a>
+				</li>
+                <li id="navVendas">
+					<a href="/dashboard">
+						<i class="fa-solid fa-bag-shopping"></i>
+						Vendas
+					</a>
+				</li>
+                <li id="navProdutos">
+					<a href="/dashboard">
+						<i class="fa-solid fa-boxes-stacked"></i>
+                        Produtos
+					</a>
+				</li>
+                <li id="navClientes">
+					<a href="/dashboard">
+						<i class="fa-solid fa-users"></i>
+						Clientes
+					</a>
+				</li>
+                <li id="navFornecedores">
+					<a href="/dashboard">
+						<i class="fa-solid fa-truck"></i>
+						Fornecedores
+					</a>
+				</li>
+                <li id="navFuncionarios">
+					<a href="/dashboard" id="navFuncionariosText">
+						<i class="fa-solid fa-user-tie"></i>
+						Funcionarios
+					</a>
+				</li>
+                <li id="navCompras">
+					<a href="/dashboard">
+						<i class="fa-solid fa-boxes-packing"></i>
+						Compras
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+        <div class="logout">
+			<a href="/login">
+				<i class="fas fa-arrow-left"></i>
+				Sair
+			</a>
+		</div>
+	</aside>
+
+    <main>
+    
+        <header>
+            <div class="headerTitle">
+                <h2>Cadastrar Novo Funcionário</h2>
+                <p class="sub">Preencha os dados do Funcionário para cadastrá-lo no sistema.</p>
+            </div>
+            <div class="headerSearch">
+                <input><a href="#"><i class="fa-solid fa-magnifying-glass searchButton"></i></a>
+            </div>
+            <div class="headerButton">
+                <a href="/funcionarios/cadastrar/">
+                    <button class="newFuncionarioButton">+ Novo Funcionario</button>
+                </a>
+            </div>
+        </header>
+
+        <div id="cardsDiv">
+            <div class="funcionarioCard">
+                <h3 class="funcionarioCardNome">Tales Uriel Wink Ferreira do Rosário</h3>
+                <div class="funcionarioCardCpf">
+                    <h4>CPF</h4>
+                    <i>000.000.000-00</i>
+                </div>
+                <div class="funcionarioCardCargo">
+                    <h4>Cargo</h4>
+                    <i>Cargo Relativamente Grande Lmao</i>
+                </div>
+                <div class="funcionarioCardEmail">
+                    <h4>Email</h4>
+                    <i>emailrelativamentegrande@email.com</i>
+                </div>
+                <div class="funcionarioCardEndereco">
+                    <h4>Endereço</h4>
+                    <i>Cidade Relativamente Grande - Lmao</i>
+                </div>
+                <div class="funcionarioCardEditButton">
+                    <a href="/funcionarios/editar/id=1">
+                        <i class="fa-solid fa-pen-to-square cardButton"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fa-solid fa-trash-can cardButton"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+    
+    <footer>
+        copiraite 2025
+    </footer>
+</body>
+</html>
