@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Pagamentos</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .box-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 22px;
+      background-color: #141414;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+      align-items: start;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field label {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #ddd;
+      font-weight: 600;
+    }
+
+    .field input {
+      width: 100%;
+      max-width: 260px;         
+      margin: 0 auto;           
+      height: 46px;             
+      padding: 10px 14px;
+      background-color: #1b1b1b;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 6px;
+      text-align: center;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .obs-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+      background-color: #141414;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .obs-box label {
+      color: #ddd;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .obs-box textarea {
+      width: 100%;
+      min-height: 180px;
+      max-height: 320px;
+      background-color: #1b1b1b;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 6px;
+      padding: 14px;
+      resize: vertical;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .btn-box {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .btn-finalizar {
+      background-color: #ff6600;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 30px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: none;
+    }
+
+    .btn-finalizar:hover {
+      background-color: #ff7f2a;
+    }
+
+    @media (max-width: 1200px) {
+      .box-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .box-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .field input { max-width: 200px; }
+    }
+
+    @media (max-width: 700px) {
+      .box-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .field input { max-width: 220px; }
+    }
+
+    @media (max-width: 420px) {
+      .box-grid { grid-template-columns: 1fr; }
+      .field input { max-width: 100%; }
+      .btn-finalizar { max-width: 320px; margin: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <h2>Sistema</h2>
+      <ul>
+        <li><i class="fa-solid fa-cash-register"></i> Ponto de Vendas</li>
+        <li class="active"><i class="fa-solid fa-credit-card"></i> Pagamentos</li>
+        <li><i class="fa-solid fa-box"></i> Produtos</li>
+        <li><i class="fa-solid fa-user"></i> Clientes</li>
+        <li><i class="fa-solid fa-truck"></i> Fornecedores</li>
+        <li><i class="fa-solid fa-users"></i> Funcionários</li>
+        <li><i class="fa-solid fa-receipt"></i> Vendas</li>
+        <li><i class="fa-solid fa-chart-line"></i> Relatório</li>
+      </ul>
+    </div>
+    <div class="logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</div>
+  </div>
+
+  <div class="content">
+    <h1>Pagamentos</h1>
+
+    <div class="box box-grid">
+      <div class="field">
+        <label>Dinheiro (R$)</label>
+        <input type="text" id="dinheiro" placeholder="0,00">
+      </div>
+
+      <div class="field">
+        <label>Cartão (R$)</label>
+        <input type="text" id="cartao" placeholder="0,00">
+      </div>
+
+      <div class="field">
+        <label>Cheque (R$)</label>
+        <input type="text" id="cheque" placeholder="0,00">
+      </div>
+
+      <div class="field">
+        <label>Total (R$)</label>
+        <input type="text" id="total" placeholder="0,00">
+      </div>
+
+      <div class="field">
+        <label>Troco (R$)</label>
+        <input type="text" id="troco" placeholder="0,00">
+      </div>
+    </div>
+
+    <div class="box obs-box">
+      <label for="obs">Observações</label>
+      <textarea id="obs" placeholder="Digite observações..."></textarea>
+    </div>
+
+    <div class="box btn-box" style="border:none; padding:0;">
+      <button class="btn-finalizar">Finalizar Venda</button>
+    </div>
+  </div>
+</body>
+</html>
