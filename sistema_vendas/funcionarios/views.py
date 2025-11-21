@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.middleware import csrf
-from .logic import buscarFuncionario
+from .logic import buscarFuncionario, salvarFuncionario
 
 # Create your views here.
 def CadastrarFuncionario(request):
@@ -10,6 +10,14 @@ def CadastrarFuncionario(request):
         csrf.get_token(request)
         template = loader.get_template('cadastrarFuncionario.html')
         return HttpResponse(template.render())
+    elif request.method == "POST":
+        try:
+            body = request.POST
+            print(body)
+            message = salvarFuncionario(body)
+            return HttpResponseRedirect('/funcionarios/cadastrar', False, message)
+        except Exception:
+            return HttpResponseBadRequest("campos obrigatórios não preenchidos ou informações inválidas")
     else:
         return HttpResponseBadRequest("método de requet inválido :c")
     
