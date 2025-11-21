@@ -5,6 +5,13 @@ from django.middleware import csrf
 from .logic import buscarFuncionario
 
 # Create your views here.
+def ConsultarFuncionarios(request):
+    if request.method == 'GET':
+        template = loader.get_template('consultarFuncionarios.html')
+        return HttpResponse(template.render())
+    else:
+        return HttpResponseBadRequest("métdod de request inválido :c")
+
 def CadastrarFuncionario(request):
     if request.method == 'GET':
         csrf.get_token(request)
