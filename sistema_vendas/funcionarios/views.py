@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.middleware import csrf
-from .logic import buscarFuncionario, salvarFuncionario
+from .logic import buscarFuncionario, salvarFuncionario, editarFuncionario
 
 # Create your views here.
 def CadastrarFuncionario(request):
@@ -13,7 +13,6 @@ def CadastrarFuncionario(request):
     elif request.method == "POST":
         try:
             body = request.POST
-            print(body)
             message = salvarFuncionario(body)
             return HttpResponseRedirect('/funcionarios/cadastrar', False, message)
         except Exception:
@@ -38,10 +37,18 @@ def EditarFuncionario(request, id):
             'cargo':funcionario['cargo'],
             'rua':funcionario['rua'],
             'numero':funcionario['numero'],
+            'complemento':funcionario['complemento'],
             'bairro':funcionario['bairro'],
             'cep':funcionario['cep'],
             'cidade':funcionario['cidade'],
             'estado':funcionario['estado'],
             }));
+    elif request.method == 'POST':
+        try:
+            body = request.POST
+            message = editarFuncionario(body, 1)
+            return HttpResponseRedirect('/funcionarios/cadastrar', False, message)
+        except Exception:
+            return HttpResponseBadRequest("campos obrigatórios não preenchidos ou informações inválidas")
     else:
         return HttpResponseBadRequest("método de request inválido :c")
