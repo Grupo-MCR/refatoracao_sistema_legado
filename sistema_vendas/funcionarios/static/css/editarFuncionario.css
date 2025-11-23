@@ -159,17 +159,24 @@ form {
   grid-template-areas:
     "nome cpf"
     "email rg"
-    "senha telefone"
-    "nvacesso celular"
-    "cargo ."
+    "telefone celular"
+    "senha senhaval"
+    "cargo nvacesso"
     "line line"
 	"endereco endereco" 
-	"rua numero"
-	"loteamento CEP"
+	"rua sbd"
+	"bairro cep"
 	"cidade estado"
 	"botao botao";
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+#splitAssDiv {
+    grid-area: sbd;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 form h2 {
@@ -179,6 +186,7 @@ form h2 {
 form h3 {
     color: #ffffff;
 }
+
 
 #nomeFuncionarioDiv {
   grid-area: nome;
@@ -208,6 +216,10 @@ form h3 {
     grid-area: senha;
 }
 
+#senhaValidationFuncionarioDiv {
+    grid-area: senhaval
+}
+
 #telefoneFuncionarioDiv {
 	grid-area: telefone;
 }
@@ -230,14 +242,20 @@ form h3 {
 
 #numeroFuncionarioDiv {
     grid-area: numero;
+    max-width: 210px;
+}
+
+#complementoFuncionarioDiv {
+    grid-area: complemento;
+    max-width: 210px;
 }
 
 #bairroFuncionarioDiv {
-    grid-area: loteamento;
+    grid-area: bairro;
 }
 
 #cepFuncionarioDiv {
-    grid-area: CEP;
+    grid-area: cep;
 }
 
 #cidadeFuncionarioDiv {
