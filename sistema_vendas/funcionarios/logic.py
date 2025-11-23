@@ -2,10 +2,10 @@ from .models import Funcionario
 
 def buscarFuncionario(id: int):
     funcionario = Funcionario.objects.filter(id=id).values()
-    print(funcionario[0])
     return funcionario[0]
 
 def salvarFuncionario(funcionario: dict[str:any]):
+    print(funcionario['nome'])
     try :
         newFuncionario = Funcionario();
         newFuncionario.nome = funcionario['nome']
@@ -25,12 +25,42 @@ def salvarFuncionario(funcionario: dict[str:any]):
         newFuncionario.estado = funcionario['estado']
         newFuncionario.cep = funcionario['cep']
 
-        newFuncionario.save();
+        newFuncionario.save()
 
         return "funcionário salvo com sucesso"
         
-    except Exception as a:
+    except Exception as error:
         print('algum problema aconteceu')
-        print(a)
-        raise a
+        print(error)
+        raise error
     
+def editarFuncionario(funcionarioEdit: dict[str:any], id: int):
+    try:
+        funcionario = Funcionario.objects.filter(id=id)[0]
+
+        funcionario.nome = funcionarioEdit['nome']
+        funcionario.senha = funcionarioEdit['senha']
+        funcionario.cargo = funcionarioEdit['cargo']
+        funcionario.nivel_acesso = funcionarioEdit['nivelAcesso']
+        funcionario.rg = funcionarioEdit['rg']
+        funcionario.cpf = funcionarioEdit['cpf']
+        funcionario.email = funcionarioEdit['email']
+        funcionario.telefone = funcionarioEdit['telefone']
+        funcionario.celular = funcionarioEdit['celular']
+        funcionario.cep = funcionarioEdit['cep']
+        funcionario.rua = funcionarioEdit['rua']
+        funcionario.numero = funcionarioEdit['numero']
+        funcionario.complemento = funcionarioEdit['complemento']
+        funcionario.bairro = funcionarioEdit['bairro']
+        funcionario.cidade = funcionarioEdit['cidade']
+        funcionario.estado = funcionarioEdit['estado']
+
+        funcionario.save()
+
+        return "dados do funcionário atualizados com sucesso"
+    
+    except Exception as error:
+        print("algum problema aconteceu")
+        print(error)
+        raise error
+        
