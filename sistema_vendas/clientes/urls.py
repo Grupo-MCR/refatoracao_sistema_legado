@@ -4,8 +4,10 @@ from . import views
 app_name = 'clientes'
 
 urlpatterns = [
-    # Página de consulta
+    # Páginas de interface
     path('consulta/', views.consulta_cliente, name='consulta_cliente'),
+    path('cadastro/', views.cadastro_cliente, name='cadastro_cliente'),
+    path('edicao/<int:cliente_id>/', views.edicao_cliente, name='edicao_cliente'),
     
     # APIs
     path('api/listar/', views.listar_clientes, name='listar_clientes'),
