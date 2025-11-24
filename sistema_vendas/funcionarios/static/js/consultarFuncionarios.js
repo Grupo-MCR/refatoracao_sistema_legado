@@ -109,7 +109,9 @@ function buildCard(data) {
     iconDeletar.classList.add("cardButton");
 
     let botaoDeletar = document.createElement('a');
-    botaoDeletar.href = "http://127.0.0.1:8000/funcionarios/deletar/id=" + data['id'];
+    botaoDeletar.classList.add("botaoDeletar");
+    botaoDeletar.href = "deletar_funcionario";
+    botaoDeletar.onclick = function() {deletarFuncionario(event, data['id'])};
     botaoDeletar.appendChild(iconDeletar);
 
     let divBotoes = document.createElement('div');
@@ -128,4 +130,56 @@ function buildCard(data) {
     divCard.appendChild(divBotoes);
 
     return divCard;
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+
+function deletarFuncionario(event, id) {
+    event.preventDefault();
+    let URL_DELETAR = "http://127.0.0.1:8000/funcionarios/api/apagarFuncionario/id=" + id;
+    try {
+        fetch(URL_DELETAR, {
+            method: 'DELETE',
+            headers: {'X-CSRFToken': csrftoken},
+            mode: 'same-origin',
+        })
+        .then((response) => {
+            if(!response.ok) {
+                response.text().then((text) => {
+                    throw new Error(text);
+                });
+            }
+            if(response.redirected) {
+            window.location.replace(response.url);
+            }
+            return response.text();
+        })
+        .then((data) => {
+            console.log(data);
+            alert(data);
+        })
+        .catch((error) => {
+            console.log(error);
+            throw new Error(error);
+        })
+    } catch(error) {
+        console.log(error);
+        alert(error);
+    }
 }
