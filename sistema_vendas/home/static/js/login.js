@@ -1,5 +1,4 @@
-let URL_LOGIN = "http://localhost:8000/login/";
-let b=22;
+let URL_LOGIN = "http://127.0.0.1:8000/login/";
 
 function getCookie(name) {
     let cookieValue = null;
