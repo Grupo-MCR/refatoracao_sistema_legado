@@ -6,6 +6,7 @@ urlpatterns = [
     path('consultar/', views.consulta_fornecedor, name='consultaFornecedor'),
     path('editar/', views.editar_fornecedor, name='editarFornecedor'),
     path('compra/', views.compra_fornecedor, name='compraFornecedor'),
+    path('historico/<int:fornecedor_id>/', views.historico_compras_fornecedor, name='historicoComprasFornecedor'),
     
     # ==================== ROTAS DE API (JSON) ====================
     
