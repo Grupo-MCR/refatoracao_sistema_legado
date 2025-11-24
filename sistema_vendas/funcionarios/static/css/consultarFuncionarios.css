@@ -1,0 +1,317 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: black;
+}
+
+aside {
+    width: 100%;
+    max-width: 220px;
+    background-color: #000000;
+    color: #A3A3A3;
+    padding: 20px 0px;
+    display: grid;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    grid:
+        'logo'
+        'nav'
+        'gap'
+        'logout';
+    grid-template-rows: 15% 60% 10% 20%;
+    border-right: 2px solid #737373;
+}
+
+.logo {
+    display: flex;
+    grid-area: logo;
+    gap: 2px;
+    font-weight: bold;
+    font-size: 20px;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    border-bottom: 2px solid #737373;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 20px 10px 20px;
+}
+
+.logo span {
+	color:  #F97316;
+	margin-left: 4px;
+}
+
+.logo-img {
+	width: 180px;
+	height: auto;
+	align-self: center;
+}
+
+nav {
+	grid-area: nav;
+    width: 100%;
+}
+nav ul {
+    list-style: none;
+    width: 100%;
+}
+
+nav ul li {
+    width: 100%;
+    max-width: 200px;
+    padding: 1px 15px 1px 15px;
+    margin: 5px 10px 5px 10px
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #A3A3A3;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+nav ul h3{
+    text-decoration: none;
+    color: #A3A3A3;
+    font-size: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+nav ul li a .material-icons,
+.logout a .material-icons {
+    font-size: 18px;
+    color: #A3A3A3;
+}
+
+#navFuncionarios {
+    background-color: #F97316;
+    border-radius: 10px;
+}
+
+#navFuncionariosText {
+    color: #ffffff;
+}
+
+.logout {
+    grid-area: logout;
+    margin: 20px 0px 20px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    border-top: 2px solid #737373;
+    padding: 20px 20px 15px 20px;
+
+}
+
+.logout h4 {
+    margin-bottom: 10px;
+}
+
+.logout a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #A3A3A3;
+    font-size: 16px;
+}
+
+header {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-height: 20%;
+    height: auto;
+    gap: 30px;
+}
+
+.headerTitle {
+    max-width: 400px;
+    width: 40%
+}
+
+.headerSearch {
+    max-width: 420px;
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.searchButton {
+    background-color: #F97316;
+    max-width: 38px;
+    max-height: 38px;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #737373;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.headerButton {
+    align-content: center;
+    max-width: 180px;
+    width: 30%
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #737373;
+    border-radius: 5px;
+    background-color: #171717;
+    color: #FFFFFF;
+    max-height: 37px;
+    max-width: 420px;
+}
+
+.newFuncionarioButton {
+    background-color: #F97316;
+    color: #fff;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    align-self: flex-start;
+    max-width: 240px;
+}
+
+main {
+    background-color: #000000;
+    padding: 40px 40px 20px 260px;
+    min-width: 0;
+    display: flex;
+    gap: 2vh;
+    height: 86vh;
+    flex-direction: column;
+}
+
+h2 {
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.sub {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+#cardsDiv {
+    max-height: 80%;
+    height: 100%;
+}
+
+.funcionarioCard {
+    display: grid;
+    max-height: 24vh;
+    height: 100%;
+    width: 100%;
+    background-color: #171717;
+    color: #ffffff;
+    border: 2px solid #737373;
+    border-radius: 10px;
+    grid-template-areas:
+        "nome nome nome btn"
+        "cpf cargo email endereco";
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 15px 5px 15px;
+    gap: 1vw;
+}
+
+.funcionarioCardNome {
+    grid-area: nome;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.funcionarioCardCpf {
+    grid-area: cpf;
+    /* max-width: 180px; */
+    width: 100%;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.funcionarioCardCargo {
+    grid-area: cargo;
+    /* max-width: 180px; */
+    width: 100%;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.funcionarioCardEmail {
+    grid-area: email;
+    /*max-width: 180px;*/
+    width: 100%;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.funcionarioCardEndereco {
+    grid-area: endereco;
+    /*max-width: 180px;*/
+    width: 100%;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.funcionarioCardEditButton {
+    grid-area: btn;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1vw;
+}
+
+.cardButton {
+    background-color: #000000;
+    max-width: 38px;
+    max-height: 38px;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #737373;
+    border-radius: 5px;
+    color: #A3A3A3;
+    text-align: center;
+}
+
+footer {
+    background-color: #000000;
+    text-align: center;
+    padding: 38px 40px 35px 260px;
+    font-size: 14px;
+    color: #a3a3a3;
+    border-top: 2px solid #737373;
+    height: 14vh;
+}

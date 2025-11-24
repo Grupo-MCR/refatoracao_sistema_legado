@@ -100,6 +100,33 @@
       background-color: #ff7f2a;
     }
 
+    .info-venda-box {
+      background-color: #1b1b1b;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .info-venda-box h3 {
+      color: #ff6600;
+      margin: 0 0 10px 0;
+    }
+
+    .info-venda-box p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    .info-venda-box .total-venda {
+      margin: 10px 0 5px 0;
+      font-size: 24px;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
     @media (max-width: 1200px) {
       .box-grid {
         grid-template-columns: repeat(4, 1fr);
@@ -148,41 +175,310 @@
   <div class="content">
     <h1>Pagamentos</h1>
 
+    {% if venda %}
+    <div class="box info-venda-box">
+      <h3>Venda #{{ venda.id }}</h3>
+      <p>Cliente: <strong>{{ venda.cliente }}</strong></p>
+      <p class="total-venda">Total da Venda: R$ {{ venda.total|floatformat:2 }}</p>
+    </div>
+    {% else %}
+    <div class="box info-venda-box">
+      <p style="color: #ff9800;">⚠️ Nenhuma venda em andamento. <a href="/venda/ponto_venda/" style="color: #ff6600;">Voltar ao PDV</a></p>
+    </div>
+    {% endif %}
+
     <div class="box box-grid">
       <div class="field">
         <label>Dinheiro (R$)</label>
-        <input type="text" id="dinheiro" placeholder="0,00">
+        <input type="text" id="dinheiro" placeholder="0,00" value="0,00">
       </div>
 
       <div class="field">
         <label>Cartão (R$)</label>
-        <input type="text" id="cartao" placeholder="0,00">
+        <input type="text" id="cartao" placeholder="0,00" value="0,00">
       </div>
 
       <div class="field">
         <label>Cheque (R$)</label>
-        <input type="text" id="cheque" placeholder="0,00">
+        <input type="text" id="cheque" placeholder="0,00" value="0,00">
       </div>
 
       <div class="field">
-        <label>Total (R$)</label>
-        <input type="text" id="total" placeholder="0,00">
+        <label>Total Pago (R$)</label>
+        <input type="text" id="total" placeholder="0,00" value="0,00"
+               {% if venda %}data-total-venda="{{ venda.total }}"{% endif %} readonly>
       </div>
 
       <div class="field">
         <label>Troco (R$)</label>
-        <input type="text" id="troco" placeholder="0,00">
+        <input type="text" id="troco" placeholder="0,00" value="0,00" readonly>
       </div>
     </div>
 
     <div class="box obs-box">
       <label for="obs">Observações</label>
-      <textarea id="obs" placeholder="Digite observações..."></textarea>
+      <textarea id="obs" placeholder="Digite observações sobre o pagamento..."></textarea>
     </div>
 
     <div class="box btn-box" style="border:none; padding:0;">
-      <button class="btn-finalizar">Finalizar Venda</button>
+      <button class="btn-finalizar" id="btnFinalizar">Finalizar Venda</button>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('💳 Script de pagamentos carregado!');
+      
+      // Elementos do formulário
+      const dinheiroInput = document.getElementById('dinheiro');
+      const cartaoInput = document.getElementById('cartao');
+      const chequeInput = document.getElementById('cheque');
+      const totalInput = document.getElementById('total');
+      const trocoInput = document.getElementById('troco');
+      const obsTextarea = document.getElementById('obs');
+      const btnFinalizar = document.getElementById('btnFinalizar');
+      
+      // Obtém o total da venda do data attribute
+      const totalVenda = parseFloat(totalInput.dataset.totalVenda || 0);
+      console.log('Total da venda:', totalVenda);
+      
+      // Se não há venda, desabilita o botão e mostra aviso
+      if (totalVenda === 0) {
+        btnFinalizar.disabled = true;
+        btnFinalizar.textContent = '⚠️ Nenhuma venda em andamento';
+        btnFinalizar.style.backgroundColor = '#999';
+        alert('⚠️ Nenhuma venda em andamento!\n\nVolte ao PDV e finalize uma venda primeiro.');
+        setTimeout(() => {
+          window.location.href = '/venda/ponto_venda/';
+        }, 2000);
+        return;
+      }
+      
+      // Função para obter CSRF token
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      
+      // Formatar valor para moeda brasileira
+      function formatarMoeda(valor) {
+        if (isNaN(valor)) valor = 0;
+        return valor.toLocaleString('pt-BR', { 
+          minimumFractionDigits: 2, 
+          maximumFractionDigits: 2 
+        });
+      }
+      
+      // Converter string para número
+      function stringParaNumero(str) {
+        if (!str || str === '') return 0;
+        let numero = str.replace(/[^\d,]/g, '');
+        numero = numero.replace(',', '.');
+        return parseFloat(numero) || 0;
+      }
+      
+      // Aplicar máscara de moeda em tempo real
+      function aplicarMascaraMoeda(input) {
+        input.addEventListener('input', (e) => {
+          let valor = e.target.value;
+          valor = valor.replace(/\D/g, '');
+          
+          if (valor === '' || valor === '0') {
+            e.target.value = '0,00';
+            calcularTotalETroco();
+            return;
+          }
+          
+          let numero = parseInt(valor);
+          numero = (numero / 100).toFixed(2);
+          let partes = numero.split('.');
+          let inteiro = partes[0];
+          let decimal = partes[1];
+          inteiro = inteiro.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          e.target.value = inteiro + ',' + decimal;
+          calcularTotalETroco();
+        });
+        
+        input.addEventListener('focus', (e) => {
+          e.target.select();
+        });
+        
+        input.addEventListener('blur', (e) => {
+          if (e.target.value === '' || e.target.value === '0') {
+            e.target.value = '0,00';
+          }
+          calcularTotalETroco();
+        });
+      }
+      
+      // Calcular total pago e troco
+      function calcularTotalETroco() {
+        const dinheiro = stringParaNumero(dinheiroInput.value);
+        const cartao = stringParaNumero(cartaoInput.value);
+        const cheque = stringParaNumero(chequeInput.value);
+        
+        const totalPago = dinheiro + cartao + cheque;
+        totalInput.value = formatarMoeda(totalPago);
+        
+        let troco = 0;
+        if (totalVenda > 0) {
+          troco = totalPago - totalVenda;
+        }
+        
+        trocoInput.value = formatarMoeda(Math.max(0, troco));
+        
+        // Feedback visual
+        if (totalVenda > 0) {
+          if (totalPago < totalVenda) {
+            totalInput.style.borderColor = '#ff4444';
+            trocoInput.style.borderColor = '#ff4444';
+          } else if (totalPago > totalVenda) {
+            totalInput.style.borderColor = '#4CAF50';
+            trocoInput.style.borderColor = '#4CAF50';
+          } else {
+            totalInput.style.borderColor = '#2196F3';
+            trocoInput.style.borderColor = '#2196F3';
+          }
+        }
+      }
+      
+      // Aplicar máscaras
+      aplicarMascaraMoeda(dinheiroInput);
+      aplicarMascaraMoeda(cartaoInput);
+      aplicarMascaraMoeda(chequeInput);
+      
+      // Duplo clique preenche valor exato
+      dinheiroInput.addEventListener('dblclick', () => {
+        if (totalVenda > 0) {
+          dinheiroInput.value = formatarMoeda(totalVenda);
+          cartaoInput.value = '0,00';
+          chequeInput.value = '0,00';
+          calcularTotalETroco();
+        }
+      });
+      
+      // Finalizar pagamento
+      btnFinalizar.addEventListener('click', async () => {
+        console.log('Botão finalizar clicado!');
+        
+        const dinheiro = stringParaNumero(dinheiroInput.value);
+        const cartao = stringParaNumero(cartaoInput.value);
+        const cheque = stringParaNumero(chequeInput.value);
+        const observacoes = obsTextarea.value.trim();
+        
+        const totalPago = dinheiro + cartao + cheque;
+        
+        console.log('Valores:', { dinheiro, cartao, cheque, totalPago, totalVenda });
+        
+        // Validações
+        if (totalPago === 0) {
+          alert('⚠️ Informe pelo menos um meio de pagamento!');
+          dinheiroInput.focus();
+          return;
+        }
+        
+        if (totalVenda > 0 && totalPago < totalVenda) {
+          const diferenca = totalVenda - totalPago;
+          const confirmar = confirm(
+            `⚠️ Valor insuficiente!\n\n` +
+            `Total da venda: R$ ${formatarMoeda(totalVenda)}\n` +
+            `Total pago: R$ ${formatarMoeda(totalPago)}\n` +
+            `Faltam: R$ ${formatarMoeda(diferenca)}\n\n` +
+            `Deseja continuar mesmo assim?`
+          );
+          
+          if (!confirmar) {
+            return;
+          }
+        }
+        
+        btnFinalizar.disabled = true;
+        btnFinalizar.textContent = 'Processando...';
+        
+        try {
+          console.log('Enviando requisição...');
+          
+          const response = await fetch('/venda/processar_pagamento/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+              dinheiro: dinheiro,
+              cartao: cartao,
+              cheque: cheque,
+              observacoes: observacoes
+            })
+          });
+          
+          console.log('Resposta recebida:', response.status);
+          
+          const data = await response.json();
+          console.log('Dados:', data);
+          
+          if (response.ok) {
+            const troco = data.troco || 0;
+            
+            let mensagem = '✅ Pagamento processado com sucesso!\n\n';
+            mensagem += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            mensagem += `Total da venda: R$ ${formatarMoeda(totalVenda)}\n`;
+            mensagem += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            
+            if (dinheiro > 0) mensagem += `💵 Dinheiro: R$ ${formatarMoeda(dinheiro)}\n`;
+            if (cartao > 0) mensagem += `💳 Cartão: R$ ${formatarMoeda(cartao)}\n`;
+            if (cheque > 0) mensagem += `📄 Cheque: R$ ${formatarMoeda(cheque)}\n`;
+            
+            mensagem += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            mensagem += `Total pago: R$ ${formatarMoeda(totalPago)}\n`;
+            
+            if (troco > 0) {
+              mensagem += `\n💰 TROCO: R$ ${formatarMoeda(troco)}`;
+            } else if (totalPago === totalVenda) {
+              mensagem += `\n✔️ Valor exato!`;
+            }
+            
+            alert(mensagem);
+            window.location.href = '/venda/ponto_venda/';
+          } else {
+            alert('❌ Erro: ' + (data.erro || 'Erro ao processar pagamento'));
+            btnFinalizar.disabled = false;
+            btnFinalizar.textContent = 'Finalizar Venda';
+          }
+        } catch (error) {
+          console.error('Erro ao processar pagamento:', error);
+          alert('❌ Erro ao conectar com o servidor. Tente novamente.');
+          btnFinalizar.disabled = false;
+          btnFinalizar.textContent = 'Finalizar Venda';
+        }
+      });
+      
+      // Atalhos de teclado
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'Enter') {
+          btnFinalizar.click();
+        }
+        
+        if (e.key === 'Escape') {
+          if (confirm('Deseja voltar ao PDV sem finalizar?')) {
+            window.location.href = '/venda/ponto_venda/';
+          }
+        }
+      });
+      
+      // Focar no primeiro campo
+      setTimeout(() => {
+        dinheiroInput.focus();
+        dinheiroInput.select();
+      }, 100);
+      
+      // Calcular inicialmente
+      calcularTotalETroco();
+      
+      console.log('💡 Dica: Dê duplo clique no campo Dinheiro para preencher o valor exato');
+      console.log('⌨️ Atalhos: Ctrl+Enter = Finalizar | ESC = Voltar');
+    });
+  </script>
 </body>
 </html>
