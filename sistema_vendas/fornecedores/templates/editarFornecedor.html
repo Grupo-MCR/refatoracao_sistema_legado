@@ -5,7 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editar Fornecedor</title>
-  <link rel="stylesheet" href="{% static '\css\editarFornecedor.css' %}">
+  <link rel="stylesheet" href="{% static 'css/editarFornecedor.css' %}">
+  <style>
+    .form-actions-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -18,7 +33,7 @@
           <li><a href="#">Pagamentos</a></li>
           <li><a href="#">Produtos</a></li>
           <li><a href="#">Clientes</a></li>
-          <li><a href="#" class="active">Fornecedores</a></li>
+          <li><a href="{% url 'consultaFornecedor' %}" class="active">Fornecedores</a></li>
           <li><a href="#">Funcionários</a></li>
           <li><a href="#">Vendas</a></li>
           <li><a href="#">Relatório</a></li>
@@ -32,58 +47,110 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="content">
       <h1>Editar Fornecedor</h1>
-      <form class="form">
+      
+      <!-- Mensagens de sucesso/erro -->
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      <form class="form" method="POST" action="{% url 'editarFornecedor' id %}">
+        {% csrf_token %}
+        
         <div class="form-row">
           <div class="form-group">
-            <label>Nome</label>
-            <input type="text" placeholder="Digite o nome do fornecedor">
+            <label>Nome *</label>
+            <input type="text" name="nome" placeholder="Digite o nome do fornecedor" 
+                   value="{{ nome }}" required>
           </div>
           <div class="form-group">
-            <label>CNPJ</label>
-            <input type="text" placeholder="00.000.000/0000-00">
+            <label>CNPJ *</label>
+            <input type="text" name="cnpj" placeholder="00.000.000/0000-00" 
+                   value="{{ cnpj }}" required>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>E-mail</label>
-            <input type="email" placeholder="email@exemplo.com">
+            <input type="email" name="email" placeholder="email@exemplo.com" 
+                   value="{{ email|default:'' }}">
           </div>
           <div class="form-group">
+            <label>Telefone</label>
+            <input type="text" name="telefone" placeholder="(00) 0000-0000" 
+                   value="{{ telefone|default:'' }}">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
             <label>Celular</label>
-            <input type="text" placeholder="(00) 00000-0000">
+            <input type="text" name="celular" placeholder="(00) 00000-0000" 
+                   value="{{ celular|default:'' }}">
+          </div>
+          <div class="form-group">
+            <label>CEP</label>
+            <input type="text" name="cep" placeholder="00000-000" 
+                   value="{{ cep|default:'' }}">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>Estado</label>
-            <input type="text" placeholder="Digite o Estado">
+            <input type="text" name="estado" placeholder="Ex: SP" maxlength="2" 
+                   value="{{ estado|default:'' }}">
           </div>
           <div class="form-group">
             <label>Cidade</label>
-            <input type="text" placeholder="Digite a cidade">
+            <input type="text" name="cidade" placeholder="Digite a cidade" 
+                   value="{{ cidade|default:'' }}">
           </div>
-        </div>
-
-        <div class="form-group full">
-          <label>Endereço</label>
-          <input type="text" placeholder="Rua, número">
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Complemento</label>
-            <input type="text" placeholder="Apartamento, bloco...">
+            <label>Bairro</label>
+            <input type="text" name="bairro" placeholder="Digite o bairro" 
+                   value="{{ bairro|default:'' }}">
           </div>
           <div class="form-group">
-            <label>CEP</label>
-            <input type="text" placeholder="00000-000">
+            <label>Endereço</label>
+            <input type="text" name="endereco" placeholder="Rua, Avenida..." 
+                   value="{{ endereco|default:'' }}">
           </div>
         </div>
 
-        <button type="submit" class="btn">Salvar Alterações</button>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Número</label>
+            <input type="number" name="numero" placeholder="Nº" 
+                   value="{{ numero|default:'' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Complemento</label>
+            <input type="text" name="complemento" placeholder="Apartamento, bloco..." 
+                   value="{{ complemento|default:'' }}">
+          </div>
+        </div>
+
+        <div class="form-actions-container">
+          <!-- Botões (mantidos no mesmo lugar) -->
+          <div class="form-actions">
+            <a href="{% url 'consultaFornecedor' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+          </div>
+        </div>
+
       </form>
+
     </main>
   </div>
 </body>
