@@ -4,8 +4,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fornecedores</title>
-  <link rel="stylesheet" href="{% static '\css\consultaFornecedor.css' %}">
+  <title>Consulta Fornecedores</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #111;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* MENU LATERAL */
+    .sidebar {
+      width: 230px;
+      background-color: #181818;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 0;
+    }
+
+    .logo {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin: 5px 0;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #bdbdbd;
+      text-decoration: none;
+      padding: 10px 20px;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #ff7b00;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .logout {
+      text-align: center;
+      padding-bottom: 15px;
+    }
+
+    .logout a {
+      color: #bdbdbd;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .logout a:hover {
+      color: #ff7b00;
+    }
+
+    /* CONTEÚDO PRINCIPAL */
+    .content {
+      flex: 1;
+      background-color: #1e1e1e;
+      padding: 40px 60px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    /* BOTÕES */
+    .btn-novo {
+      background-color: #ff7b00;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn-novo:hover {
+      background-color: #e56f00;
+    }
+
+    /* MENSAGENS */
+    .messages {
+      margin-bottom: 20px;
+    }
+
+    .alert {
+      padding: 15px 20px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .alert-error {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    /* TABELA */
+    .table-container {
+      background-color: #111;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background-color: #ff7b00;
+      color: #fff;
+      padding: 15px;
+      text-align: left;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid #2a2a2a;
+      color: #ccc;
+    }
+
+    tr:hover {
+      background-color: #252525;
+    }
+
+    /* BOTÕES DE AÇÃO */
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-action {
+      background-color: transparent;
+      border: none;
+      color: #ccc;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+      padding: 8px;
+    }
+
+    .btn-action:hover {
+      color: #ff7b00;
+    }
+
+    .btn-action.delete:hover {
+      color: #dc3545;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #888;
+    }
+
+    .empty-state a {
+      color: #ff7b00;
+      text-decoration: underline;
+    }
+
+    .empty-state a:hover {
+      color: #e56f00;
+    }
+  </style>
+  <script>
+    // Remove mensagens automaticamente após 5 segundos
+    document.addEventListener('DOMContentLoaded', function() {
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(function(alert) {
+        setTimeout(function() {
+          alert.style.transition = 'opacity 0.5s ease';
+          alert.style.opacity = '0';
+          setTimeout(function() {
+            alert.remove();
+          }, 500);
+        }, 3000); // 5000ms = 5 segundos
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="container">
@@ -18,7 +235,7 @@
           <li><a href="#">Pagamentos</a></li>
           <li><a href="#">Produtos</a></li>
           <li><a href="#">Clientes</a></li>
-          <li><a href="#" class="active">Fornecedores</a></li>
+          <li><a href="{% url 'consultaFornecedor' %}" class="active">Fornecedores</a></li>
           <li><a href="#">Funcionários</a></li>
           <li><a href="#">Vendas</a></li>
           <li><a href="#">Relatório</a></li>
@@ -31,47 +248,70 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="content">
-      <h1>Fornecedores</h1>
-
-      <!-- BOTÕES SUPERIORES -->
-      <div class="actions">
-        <a href="{% url 'cadastroFornecedor' %}" class="btn">Novo Fornecedor</a>
-        <a href="#" class="btn">Nova Compra</a>
+      <div class="header">
+        <h1>Fornecedores</h1>
+        <a href="{% url 'cadastroFornecedor' %}" class="btn-novo">+ Novo Fornecedor</a>
       </div>
 
-      <!-- TABELA DE FORNECEDORES -->
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>CNPJ</th>
-            <th>E-mail</th>
-            <th>Celular</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- EXEMPLOS (puxará do back depois) -->
-          <tr>
-            <td>TechSupply</td>
-            <td>12.345.678/0001-90</td>
-            <td>contato@techsupply.com</td>
-            <td>(11) 98765-4321</td>
-            <td>
-              <a href="{% url 'editarFornecedor' %}" class="btn-editar">Editar</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Comercial Norte</td>
-            <td>98.765.432/0001-12</td>
-            <td>vendas@comercialnorte.com</td>
-            <td>(31) 98888-9999</td>
-            <td>
-              <a href="{% url 'editarFornecedor' %}" class="btn-editar">Editar</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- Mensagens -->
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- TABELA -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>CNPJ</th>
+              <th>E-mail</th>
+              <th>Celular</th>
+              <th>Cidade</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if fornecedores %}
+              {% for fornecedor in fornecedores %}
+                <tr>
+                  <td>{{ fornecedor.nome }}</td>
+                  <td>{{ fornecedor.cnpj }}</td>
+                  <td>{{ fornecedor.email|default:"—" }}</td>
+                  <td>{{ fornecedor.celular|default:"—" }}</td>
+                  <td>{{ fornecedor.cidade|default:"—" }}</td>
+                  <td>
+                    <div class="action-buttons">
+                      <a href="{% url 'editarFornecedor' fornecedor.id %}" class="btn-action">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </a>
+                      <form method="POST" action="{% url 'excluirFornecedor' fornecedor.id %}" style="display: inline; margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-action delete" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <p>Nenhum fornecedor cadastrado.</p>
+                  <p><a href="{% url 'cadastroFornecedor' %}">Clique aqui para cadastrar o primeiro fornecedor</a></p>
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
     </main>
   </div>
 </body>
