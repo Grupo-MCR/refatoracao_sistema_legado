@@ -12,3 +12,13 @@ def buscarFuncionários():
     for funcionario in funcionarios:
         funcionariosList.append(funcionario)
     return funcionariosList
+
+def apagarFuncionario(id: int):
+    try:
+        funcionario = Funcionario.objects.filter(id=id)[0];
+        funcionario.delete();
+        return "funcionário apagado com sucesso";
+    except Exception as error:
+        print("erro ao apagar funcionário");
+        print(error);
+        raise error;
