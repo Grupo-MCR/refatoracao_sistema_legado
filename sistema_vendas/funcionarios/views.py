@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.template import loader
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
 from django.middleware import csrf
-from .logic import buscarFuncionario
+from .logic import buscarFuncionario, buscarFuncionários
 
 # Create your views here.
 def ConsultarFuncionarios(request):
@@ -10,7 +10,14 @@ def ConsultarFuncionarios(request):
         template = loader.get_template('consultarFuncionarios.html')
         return HttpResponse(template.render())
     else:
-        return HttpResponseBadRequest("métdod de request inválido :c")
+        return HttpResponseBadRequest("método de requisição inválido :c")
+
+def ListarFuncionarios(request):
+    if request.method == 'GET':
+        responseData = buscarFuncionários()
+        return JsonResponse(responseData, safe=False)
+    else:
+        return HttpResponseBadRequest("método de requisição inválido :c")
 
 def CadastrarFuncionario(request):
     if request.method == 'GET':
