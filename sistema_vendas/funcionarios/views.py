@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.template import loader
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, HttpResponseServerError ,JsonResponse
 from django.middleware import csrf
-from .logic import buscarFuncionario, buscarFuncionários
+from .logic import buscarFuncionario, buscarFuncionários, apagarFuncionario
 
 # Create your views here.
 def ConsultarFuncionarios(request):
     if request.method == 'GET':
+        csrf.get_token(request)
         template = loader.get_template('consultarFuncionarios.html')
         return HttpResponse(template.render())
     else:
@@ -49,5 +50,15 @@ def EditarFuncionario(request, id):
             'cidade':funcionario['cidade'],
             'estado':funcionario['estado'],
             }));
+    else:
+        return HttpResponseBadRequest("método de request inválido :c")
+
+def DeletarFuncionario(request, id):
+    if request.method == 'DELETE':
+        try:
+            message = apagarFuncionario(id);
+            return HttpResponseRedirect("/funcionarios/consultar", True, message)
+        except Exception:
+            return HttpResponseServerError("erro ao apagar funcionário :P")
     else:
         return HttpResponseBadRequest("método de request inválido :c")
