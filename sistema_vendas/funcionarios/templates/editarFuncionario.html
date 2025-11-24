@@ -74,11 +74,12 @@
     <main>
     
         <header>
-            <h2>Cadastrar Novo Funcionário</h2>
-            <p class="sub">Preencha os dados do Funcionário para cadastrá-lo no sistema.</p>
+            <h2>Editar Funcionário</h2>
+            <p class="sub">Altere os dados que deseja editar.</p>
         </header>
 
         <form onsubmit="mandarFuncionario(event)" id="cadFuncionario">
+            {% csrf_token %}
 
             <div id="nomeFuncionarioDiv" class="inputDiv">
                 <label>Nome do Funcionário</label>
@@ -102,7 +103,12 @@
 
             <div id="senhaFuncionarioDiv" class="inputDiv">
                 <label>Senha do Funcionario</label>
-                <input type"text" name="senha" id="senhaFuncionarioInput" class="funcionarioInput"  placeholder="senha" value={{senha}} required>
+                <input type="password" name="senha" id="senhaFuncionarioInput" class="funcionarioInput"  placeholder="senha" value={{senha}} required>
+            </div>
+
+            <div id="senhaValidationFuncionarioDiv" class="inputDiv">
+                <label>Repita a Senha do Funcionario</label>
+                <input type="password" name="senha" id="senhaValidationFuncionarioInput" class=""  placeholder="senha" value={{senha}} required>
             </div>
 
             <div id="telefoneFuncionarioDiv" class="inputDiv">
@@ -112,7 +118,7 @@
 
             <div id="nivelAcessoSelect" class="inputDiv">
                 <label>Selecione o Nível de Acesso do Funcionário</label>
-                <select type="text" id="nivelAcessoFuncionarioInput" name="nivelAcessoSelect" class="funcionarioInput" value="{{nvacesso}}">
+                <select type="text" id="nivelAcessoFuncionarioInput" name="nivelAcesso" class="funcionarioInput" value="{{nvacesso}}">
                     <option value="0">Usuário</option>
                     <option value="1">Adminstrador</option>
                 </select>
@@ -137,19 +143,28 @@
                 <input type="text" name="rua" id="ruaFuncionarioInput" class="funcionarioInput" placeholder="Nome da rua" value={{rua}} required>
             </div>
 
-            <div id="numeroFuncionarioDiv" class="inputDiv">
-                <label>Número</label>
-                <input type="text" name="numero" id="numeroFuncionarioInput" class="funcionarioInput" placeholder="Número da casa" value={{numero}} required>
+            <div id="splitAssDiv">
+
+                <div id="numeroFuncionarioDiv" class="inputDiv">
+                    <label>Número</label>
+                    <input type="text" name="numero" id="numeroFuncionarioInput" class="funcionarioInput halfInput" placeholder="Número da casa" value="{{numero}}" required>
+                </div>
+                
+                <div id="complementoFuncionarioDiv" class="inputDiv">
+                    <label>Complemento</label>
+                    <input type="text" name="complemento" id="complementoFuncionarioInput" class="funcionarioInput halfInput" placeholder="Ex: apartamento" value="{{complemento}}">
+                </div>
+
             </div>
 
             <div id="bairroFuncionarioDiv" class="inputDiv">
                 <label>Bairro</label>
-                <input type="text" name="loteamento" id="bairroFuncionarioInput" class="funcionarioInput" placeholder="Nome do bariro" value="{{bairro}}" required>
+                <input type="text" name="bairro" id="bairroFuncionarioInput" class="funcionarioInput" placeholder="Nome do bariro" value="{{bairro}}" required>
             </div>
 
             <div id="cepFuncionarioDiv" class="inputDiv">
                 <label>CEP</label>
-                <input type="text" name="CEP" id="cepFuncionarioInput" class="funcionarioInput" placeholder="00000-000" value="{{cep}}" required>
+                <input type="text" name="cep" id="cepFuncionarioInput" class="funcionarioInput" placeholder="00000-000" value="{{cep}}" required>
             </div>
 
             <div id="cidadeFuncionarioDiv" class="inputDiv">
@@ -200,5 +215,7 @@
     <footer>
         copiraite 2025
     </footer>
+
+    <script src="{% static 'js\editarFuncionario.js' %}"></script>
 </body>
 </html>

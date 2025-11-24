@@ -44,6 +44,39 @@ def compra_fornecedor(request):
     else:
         return HttpResponseBadRequest("método de request inválido :c")
 
+def historico_compras_fornecedor(request, fornecedor_id):
+    """
+    Tela de histórico de compras de um fornecedor específico
+    """
+    if request.method == 'GET':
+        try:
+            csrf.get_token(request)
+            
+            # Busca o fornecedor
+            fornecedor = Fornecedor.objects.get(id=fornecedor_id)
+            
+            # Busca as compras do fornecedor usando o serviço
+            resultado = CompraService.listar_compras({'fornecedor_id': fornecedor_id})
+            
+            # Prepara os dados para o template
+            context = {
+                'fornecedor': fornecedor,
+                'pedidos': resultado.get('compras', []),
+                'total_pedidos': len(resultado.get('compras', [])),
+                'total_investido': sum(compra.get('valor_total', 0) for compra in resultado.get('compras', [])),
+                'pedidos_pendentes': sum(1 for compra in resultado.get('compras', []) if compra.get('status') == 'pendente')
+            }
+            
+            template = loader.get_template('historicoCompras.html')
+            return HttpResponse(template.render(context, request))
+            
+        except Fornecedor.DoesNotExist:
+            return HttpResponseBadRequest("Fornecedor não encontrado")
+        except Exception as e:
+            return HttpResponseBadRequest(f"Erro ao carregar histórico: {str(e)}")
+    else:
+        return HttpResponseBadRequest("método de request inválido :c"
+
 
 # ==================== VIEWS DE API (JSON) ====================
 

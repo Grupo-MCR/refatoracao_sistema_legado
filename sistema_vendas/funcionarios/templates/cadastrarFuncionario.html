@@ -79,6 +79,7 @@
         </header>
 
         <form onsubmit="mandarFuncionario(event)" id="cadFuncionario">
+            {% csrf_token %}
 
             <div id="nomeFuncionarioDiv" class="inputDiv">
                 <label>Nome do Funcionario</label>
@@ -90,7 +91,7 @@
                 <input type="text" name="cpf" id="propritarioFuncionarioInput" class="funcionarioInput" placeholder="000.000.000-00" maxlength="18" required>
             </div>
 
-            <div id="emailFuncionarioDeiv" class="inputDiv">
+            <div id="emailFuncionarioDiv" class="inputDiv">
                 <label>Email do Funcionario</label>
                 <input type="email" name="email" id="emailFuncionarioInput" class="funcionarioInput" placeholder="exemplo@email.com" required>
             </div>
@@ -102,17 +103,22 @@
 
             <div id="senhaFuncionarioDiv" class="inputDiv">
                 <label>Senha do Funcionario</label>
-                <input type"text" name="senha" id="senhaFuncionarioInput" class="funcionarioInput"  placeholder="senha" required>
+                <input type="password" name="senha" id="senhaFuncionarioInput" class="funcionarioInput"  placeholder="senha" required>
+            </div>
+
+            <div id="senhaValidationFuncionarioDiv" class="inputDiv">
+                <label>Repita a Senha do Funcionario</label>
+                <input type="password" name="senha" id="senhaValidationFuncionarioInput" class=""  placeholder="senha" required>
             </div>
 
             <div id="telefoneFuncionarioDiv" class="inputDiv">
-                <label>Telefone Fixo do proprietário (opcional)</label>
-                <input type="tel" name="telefone" class="funcionarioInput" id="telefoneFuncionarioInput" placeholder="00 0000-0000">
+                <label>Telefone Fixo do proprietário</label>
+                <input type="tel" name="telefone" class="funcionarioInput" id="telefoneFuncionarioInput" placeholder="00 0000-0000" required>
             </div>
 
             <div id="nivelAcessoSelect" class="inputDiv">
                 <label>Selecione o Nível de Acesso do Funcionário</label>
-                <select type="text" id="nivelAcessoFuncionarioInput" name="nivelAcessoSelect" class="funcionarioInput">
+                <select type="text" id="nivelAcessoFuncionarioInput" name="nivelAcesso" class="funcionarioSelect">
                     <option value="0">Usuário</option>
                     <option value="1">Adminstrador</option>
                 </select>
@@ -137,19 +143,28 @@
                 <input type="text" name="rua" id="ruaFuncionarioInput" class="funcionarioInput" placeholder="Nome da rua" required>
             </div>
 
-            <div id="numeroFuncionarioDiv" class="inputDiv">
-                <label>Número</label>
-                <input type="text" name="numero" id="numeroFuncionarioInput" class="funcionarioInput" placeholder="Número da casa" required>
+            <div id="splitAssDiv">
+
+                <div id="numeroFuncionarioDiv" class="inputDiv">
+                    <label>Número</label>
+                    <input type="text" name="numero" id="numeroFuncionarioInput" class="funcionarioInput halfInput" placeholder="Número da casa" required>
+                </div>
+                
+                <div id="complementoFuncionarioDiv" class="inputDiv">
+                    <label>Complemento</label>
+                    <input type="text" name="complemento" id="complementoFuncionarioInput" class="funcionarioInput halfInput" placeholder="Ex: apartamento">
+                </div>
+
             </div>
 
             <div id="bairroFuncionarioDiv" class="inputDiv">
                 <label>Bairro</label>
-                <input type="text" name="loteamento" id="bairroFuncionarioInput" class="funcionarioInput" placeholder="Nome do bariro" required>
+                <input type="text" name="bairro" id="bairroFuncionarioInput" class="funcionarioInput" placeholder="Nome do bariro" required>
             </div>
 
             <div id="cepFuncionarioDiv" class="inputDiv">
                 <label>CEP</label>
-                <input type="text" name="CEP" id="cepFuncionarioInput" class="funcionarioInput" placeholder="00000-000" required>
+                <input type="text" name="cep" id="cepFuncionarioInput" class="funcionarioInput" placeholder="00000-000" required>
             </div>
 
             <div id="cidadeFuncionarioDiv" class="inputDiv">
@@ -159,7 +174,7 @@
 
             <div id="estadoFuncionarioDiv" class="inputDiv">
                 <label>Estado</label>
-                <select type="text" name="estado" id="estadoFuncionarioInput" class="funcionarioInput" placeholder="Escolha um estado">
+                <select type="text" name="estado" id="estadoFuncionarioInput" class="funcionarioSelect" placeholder="Escolha um estado">
                     <option value="AC">Acre</option>
                     <option value="AL">Alagoas</option>
                     <option value="AP">Amapá</option>
@@ -200,5 +215,7 @@
     <footer>
         copiraite 2025
     </footer>
+
+    <script src="{% static 'js/cadastrarFuncionario.js' %}"></script>
 </body>
 </html>

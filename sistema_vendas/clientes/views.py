@@ -13,6 +13,20 @@ def consulta_cliente(request):
     return render(request, 'consulta_cliente.html')
 
 
+def cadastro_cliente(request):
+    """
+    Renderiza a página de cadastro de cliente
+    """
+    return render(request, 'cadastro_cliente.html')
+
+
+def edicao_cliente(request, cliente_id):
+    """
+    Renderiza a página de edição de cliente
+    """
+    return render(request, 'edicao_cliente.html', {'cliente_id': cliente_id})
+
+
 @require_http_methods(["GET"])
 def listar_clientes(request):
     """
