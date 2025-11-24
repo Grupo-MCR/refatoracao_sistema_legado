@@ -207,7 +207,8 @@ main {
     min-width: 0;
     display: flex;
     gap: 2vh;
-    height: 86vh;
+    min-height: 86vh;
+    height: auto;
     flex-direction: column;
 }
 
@@ -225,7 +226,9 @@ h2 {
 
 #cardsDiv {
     max-height: 80%;
-    height: 100%;
+    height: auto;
+    gap: 2vh;
+    display: grid;
 }
 
 .funcionarioCard {
@@ -240,6 +243,7 @@ h2 {
     grid-template-areas:
         "nome nome nome btn"
         "cpf cargo email endereco";
+    grid-template-columns: 9vw 20vw 22vw 20vw;
     align-items: center;
     justify-content: space-between;
     padding: 5px 15px 5px 15px;

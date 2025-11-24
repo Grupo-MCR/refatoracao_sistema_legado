@@ -1,16 +1,24 @@
 from django.shortcuts import render
 from django.template import loader
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect, HttpResponseServerError ,JsonResponse
 from django.middleware import csrf
-from .logic import buscarFuncionario, salvarFuncionario, editarFuncionario
+from .logic import buscarFuncionario, buscarFuncionários, apagarFuncionario, salvarFuncionario, editarFuncionario
 
 # Create your views here.
 def ConsultarFuncionarios(request):
     if request.method == 'GET':
+        csrf.get_token(request)
         template = loader.get_template('consultarFuncionarios.html')
         return HttpResponse(template.render())
     else:
-        return HttpResponseBadRequest("métdod de request inválido :c")
+        return HttpResponseBadRequest("método de requisição inválido :c")
+
+def ListarFuncionarios(request):
+    if request.method == 'GET':
+        responseData = buscarFuncionários()
+        return JsonResponse(responseData, safe=False)
+    else:
+        return HttpResponseBadRequest("método de requisição inválido :c")
 
 def CadastrarFuncionario(request):
     if request.method == 'GET':
@@ -57,5 +65,15 @@ def EditarFuncionario(request, id):
             return HttpResponseRedirect('/funcionarios/cadastrar', False, message)
         except Exception:
             return HttpResponseBadRequest("campos obrigatórios não preenchidos ou informações inválidas")
+    else:
+        return HttpResponseBadRequest("método de request inválido :c")
+
+def DeletarFuncionario(request, id):
+    if request.method == 'DELETE':
+        try:
+            message = apagarFuncionario(id);
+            return HttpResponseRedirect("/funcionarios/consultar", True, message)
+        except Exception:
+            return HttpResponseServerError("erro ao apagar funcionário :P")
     else:
         return HttpResponseBadRequest("método de request inválido :c")
