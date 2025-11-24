@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from django.utils import timezone
+from django.db.models import Sum
 from decimal import Decimal
+from datetime import datetime
 import json
 import traceback
 
@@ -46,6 +49,11 @@ def Pagamento(request):
     template = loader.get_template('pagamento.html')
     context = {'venda': venda_data}
     return HttpResponse(template.render(context, request))
+
+def historico_vendas(request):
+    """Renderiza a página de histórico de vendas"""
+    template = loader.get_template('historico_vendas.html')
+    return HttpResponse(template.render({}, request))
 
 def buscar_cliente(request):
     """Busca cliente por CPF"""
@@ -301,3 +309,112 @@ def processar_pagamento(request):
         print(f"[ERRO] Erro ao processar pagamento: {str(e)}")
         print(traceback.format_exc())
         return JsonResponse({'erro': f'Erro no servidor: {str(e)}'}, status=500)
+
+
+# ============================================
+# NOVAS VIEWS PARA HISTÓRICO DE VENDAS
+# ============================================
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def buscar_vendas_periodo(request):
+    """
+    Busca vendas em um período específico
+    Espera JSON: {"dataInicio": "DD/MM/YYYY", "dataFim": "DD/MM/YYYY"}
+    Retorna: lista de vendas
+    """
+    try:
+        data = json.loads(request.body)
+        data_inicio = data.get('dataInicio')
+        data_fim = data.get('dataFim')
+        
+        print(f"[DEBUG] Buscando vendas - Período: {data_inicio} até {data_fim}")
+        
+        # Converter datas de DD/MM/YYYY para objeto datetime
+        data_inicio_obj = datetime.strptime(data_inicio, '%d/%m/%Y')
+        data_fim_obj = datetime.strptime(data_fim, '%d/%m/%Y')
+        
+        # Buscar vendas no período
+        vendas = VendaModel.objects.filter(
+            data_venda__date__gte=data_inicio_obj.date(),
+            data_venda__date__lte=data_fim_obj.date()
+        ).select_related('cliente_id').order_by('-data_venda')
+        
+        print(f"[DEBUG] Vendas encontradas: {vendas.count()}")
+        
+        # Formatar dados para retorno
+        vendas_list = []
+        for venda in vendas:
+            vendas_list.append({
+                'codigo': str(venda.id).zfill(6),  # Formata ID como código com zeros à esquerda
+                'data': venda.data_venda.strftime('%d/%m/%Y'),
+                'cliente': venda.cliente_id.nome if venda.cliente_id else 'Cliente não identificado',
+                'total': f'R$ {float(venda.total_venda):.2f}'.replace('.', ','),
+                'obs': venda.observacoes[:50] if venda.observacoes else ''  # Limita observações a 50 caracteres
+            })
+        
+        return JsonResponse({
+            'success': True,
+            'vendas': vendas_list
+        })
+        
+    except ValueError as e:
+        print(f"[ERRO] Data inválida: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': 'Data inválida. Use o formato DD/MM/YYYY'
+        }, status=400)
+        
+    except Exception as e:
+        print(f"[ERRO] Erro ao buscar vendas: {str(e)}")
+        print(traceback.format_exc())
+        return JsonResponse({
+            'success': False,
+            'error': f'Erro no servidor: {str(e)}'
+        }, status=500)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def buscar_total_vendas_data(request):
+    """
+    Busca o total de vendas em uma data específica
+    Espera JSON: {"data": "DD/MM/YYYY"}
+    Retorna: total de vendas
+    """
+    try:
+        data = json.loads(request.body)
+        data_venda = data.get('data')
+        
+        print(f"[DEBUG] Buscando total de vendas - Data: {data_venda}")
+        
+        # Converter data de DD/MM/YYYY para objeto datetime
+        data_venda_obj = datetime.strptime(data_venda, '%d/%m/%Y')
+        
+        # Buscar total de vendas na data
+        total = VendaModel.objects.filter(
+            data_venda__date=data_venda_obj.date()
+        ).aggregate(total=Sum('total_venda'))['total'] or Decimal('0')
+        
+        print(f"[DEBUG] Total encontrado: R$ {total}")
+        
+        return JsonResponse({
+            'success': True,
+            'total': f'R$ {float(total):.2f}'.replace('.', ','),
+            'data': data_venda
+        })
+        
+    except ValueError as e:
+        print(f"[ERRO] Data inválida: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': 'Data inválida. Use o formato DD/MM/YYYY'
+        }, status=400)
+        
+    except Exception as e:
+        print(f"[ERRO] Erro ao buscar total: {str(e)}")
+        print(traceback.format_exc())
+        return JsonResponse({
+            'success': False,
+            'error': f'Erro no servidor: {str(e)}'
+        }, status=500)
