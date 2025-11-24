@@ -117,22 +117,16 @@ class FornecedorService:
     
     @staticmethod
     def buscar_fornecedor(fornecedor_id):
-        """
-        Busca um fornecedor pelo ID
-        
-        Args:
-            fornecedor_id (int): ID do fornecedor
-            
-        Returns:
-            Fornecedor ou None
-        """
+        """Busca um fornecedor pelo ID"""
         try:
-            fornecedor = Fornecedor.objects.filter(id=fornecedor_id).values()
-            return fornecedor[0]
-        except Fornecedor.DoesNotExist:
+            fornecedor = Fornecedor.objects.filter(id=fornecedor_id)
+            if fornecedor.exists():
+                return fornecedor[0]
+            return None  # ADICIONE ISSO
+        except Exception as e:
+            print(f"Erro ao buscar fornecedor: {str(e)}")
             return None
-    
-    
+            
     @staticmethod
     def listar_fornecedores():
         """
