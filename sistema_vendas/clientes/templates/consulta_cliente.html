@@ -231,18 +231,19 @@
         }
 
         function novoCliente() {
-            // Implementar navegação para página de cadastro
-            alert('Redirecionar para página de cadastro de cliente');
-        }
-
-        function visualizarCliente(id) {
-            // Implementar visualização de cliente
-            alert(`Visualizar cliente ID: ${id}`);
+            // Redirecionar para página de cadastro usando a URL do Django
+            window.location.href = "{% url 'clientes:cadastro_cliente' %}";
         }
 
         function editarCliente(id) {
-            // Implementar edição de cliente
-            alert(`Editar cliente ID: ${id}`);
+            // Redirecionar para página de edição usando a URL do Django
+            window.location.href = `/clientes/edicao/${id}/`;
+        }
+
+        function visualizarCliente(id) {
+            // Se você tiver uma página de visualização, use esta URL
+            // Caso contrário, pode redirecionar para edição em modo leitura
+            window.location.href = `/clientes/edicao/${id}/`;
         }
 
         async function deletarCliente(id, nome) {
