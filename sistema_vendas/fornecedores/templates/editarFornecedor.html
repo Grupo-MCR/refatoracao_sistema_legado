@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editar Fornecedor</title>
   <link rel="stylesheet" href="{% static 'css/editarFornecedor.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     .form-actions-container {
       display: flex;
@@ -63,6 +64,10 @@
                     <polyline points="17 11 19 13 23 9" />
                 </svg>
                 Fornecedores
+            </div>
+            <div class="menu-item" onclick='location.href="{% url 'fornecedores:compraFornecedor' %}"'>
+                <i class="fa-solid fa-boxes-stacked"></i>
+                compra
             </div>
             <div class="menu-item" onclick='location.href="{% url 'funcionarios:consultar' %}"'>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

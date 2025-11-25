@@ -7,6 +7,7 @@
     <title>Nova Compra</title>
     <link rel="stylesheet" href="{% static 'css/compraFornecedor.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <div class="sidebar">
@@ -47,6 +48,10 @@
                     <polyline points="17 11 19 13 23 9" />
                 </svg>
                 Fornecedores
+            </div>
+            <div class="menu-item" onclick='location.href="{% url 'fornecedores:compraFornecedor' %}"'>
+                <i class="fa-solid fa-boxes-stacked"></i>
+                compra
             </div>
             <div class="menu-item" onclick='location.href="{% url 'funcionarios:consultar' %}"'>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

@@ -50,6 +50,10 @@
         </svg>
         Fornecedores
       </div>
+      <div class="menu-item" onclick='location.href="{% url 'fornecedores:compraFornecedor' %}"'>
+                <i class="fa-solid fa-boxes-stacked"></i>
+                compra
+            </div>
       <div class="menu-item active" onclick='location.href="{% url 'funcionarios:consultar' %}"'>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
