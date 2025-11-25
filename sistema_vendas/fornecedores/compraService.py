@@ -190,7 +190,7 @@ class CompraService:
     @staticmethod
     def listar_compras(filtros=None):
         """
-        Lista todas as compras com filtros opcionais
+        Lista todas as compras com filtros opcionais (INCLUINDO OS ITENS)
         
         Args:
             filtros (dict, optional): Filtros para a consulta
@@ -200,10 +200,12 @@ class CompraService:
                 - data_fim (str): Data fim no formato dd/mm/yyyy
         
         Returns:
-            dict: Lista de compras
+            dict: Lista de compras com seus itens
         """
         try:
-            compras = Compra.objects.select_related('fornecedor', 'criado_por').all()
+            from .models import ItemCompra
+            
+            compras = Compra.objects.select_related('fornecedor', 'criado_por').prefetch_related('itens__produto').all()
             
             if filtros:
                 if filtros.get('fornecedor_id'):
@@ -231,10 +233,20 @@ class CompraService:
                         'id': compra.id,
                         'numero_pedido': compra.numero_pedido,
                         'fornecedor': compra.fornecedor.nome,
-                        'data_compra': compra.data_compra.strftime('%d/%m/%Y %H:%M'),
+                        'data_compra': compra.data_compra.strftime('%d/%m/%Y'),
                         'status': compra.status,
                         'valor_total': float(compra.valor_total),
-                        'criado_por': compra.criado_por.username if compra.criado_por else None
+                        'criado_por': compra.criado_por.username if compra.criado_por else None,
+                        # ADICIONADO: Incluir os itens da compra
+                        'itens': [
+                            {
+                                'produto': item.produto.descricao,
+                                'quantidade': item.quantidade,
+                                'preco_unitario': float(item.preco_unitario),
+                                'subtotal': float(item.subtotal)
+                            }
+                            for item in compra.itens.all()
+                        ]
                     }
                     for compra in compras
                 ]

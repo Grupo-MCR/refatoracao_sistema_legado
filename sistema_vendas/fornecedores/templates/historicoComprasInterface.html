@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Histórico de Compras</title>
+    <title>Histórico de Compras - {{ fornecedor.nome }}</title>
     <style>
         * {
             margin: 0;
@@ -105,6 +106,11 @@
             color: #fff;
             cursor: pointer;
             padding: 0;
+            transition: opacity 0.2s;
+        }
+
+        .back-button:hover {
+            opacity: 0.7;
         }
 
         .back-button svg {
@@ -157,6 +163,7 @@
             font-weight: 600;
             color: #fff;
             margin-top: 5px;
+            display: block;
         }
 
         .stat-card .highlight {
@@ -234,6 +241,14 @@
             color: #FF5722;
         }
 
+        .order-status-total .status.processing {
+            color: #FFC107;
+        }
+
+        .order-status-total .status.cancelled {
+            color: #999;
+        }
+
         .order-status-total .total {
             font-size: 18px;
             font-weight: 600;
@@ -281,6 +296,32 @@
 
         .item-row .subtotal-value {
             color: #ff6b35;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #b0b0b0;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .empty-state p {
+            font-size: 14px;
         }
 
         @media (max-width: 768px) {
@@ -410,7 +451,7 @@
         <div class="content-area">
             
             <div class="page-header">
-                <button class="back-button" onclick="alert('Botão de voltar - sem funcionalidade (apenas interface)')">
+                <button class="back-button" onclick="window.history.back()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="19" y1="12" x2="5" y2="12"></line>
                         <polyline points="12 19 5 12 12 5"></polyline>
@@ -418,177 +459,93 @@
                 </button>
                 <div class="page-title-container">
                     <h1>Histórico de Compras</h1>
-                    <p>TechSupply </p>
+                    <p>{{ fornecedor.nome }}</p>
                 </div>
             </div>
 
             <div class="stats-container">
                 <div class="stat-card">
                     <p>Total de Pedidos:</p>
-                    <strong>3</strong>
+                    <strong>{{ total_pedidos }}</strong>
                 </div>
                 <div class="stat-card">
-                    <p>Total de Investidos:</p>
-                    <strong class="highlight">R$ 71.700,00 </strong>
+                    <p>Total Investido:</p>
+                    <strong class="highlight">R$ {{ total_investido|floatformat:2 }}</strong>
                 </div>
                 <div class="stat-card">
                     <p>Pedidos Pendentes:</p>
-                    <strong>1</strong>
+                    <strong>{{ pedidos_pendentes }}</strong>
                 </div>
             </div>
 
             <div class="order-list">
-                
-                <div class="order-card">
-                    <div class="order-header">
-                        <div class="order-info">
-                            <div class="id-date">#PED-001 <span>15/01/2025</span></div>
-                            <div class="order-status-total">
-                                <div class="status-container">
-                                    <span class="label">Status:</span>
-                                    <div class="status delivered">Entregue</div>
+                {% if pedidos %}
+                    {% for pedido in pedidos %}
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <div class="id-date">
+                                    {{ pedido.numero_pedido }} 
+                                    <span>{{ pedido.data_compra }}</span>
                                 </div>
-                                <div class="total-container">
-                                    <span class="label">Total:</span>
-                                    <div class="total">R$ 44.750,00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="order-items">
-                        <div class="item-row">
-                            <span class="product-name">Notebook Dell</span>
-                            <div class="value-container">
-                                <span class="label">Quantidade</span>
-                                <span class="value">10</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Preço Unitário</span>
-                                <span class="value">R$ 3200,00</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Subtotal</span>
-                                <span class="value subtotal-value">R$ 32000,00</span>
-                            </div>
-                        </div>
-                        <div class="item-row">
-                            <span class="product-name">Monitor LG 24"</span>
-                            <div class="value-container">
-                                <span class="label">Quantidade</span>
-                                <span class="value">15</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Preço Unitário</span>
-                                <span class="value">R$ 850,00</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Subtotal</span>
-                                <span class="value subtotal-value">R$ 12750,00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="order-card">
-                    <div class="order-header">
-                        <div class="order-info">
-                            <div class="id-date">#PED-004 <span>15/01/2025</span></div>
-                            <div class="order-status-total">
-                                <div class="status-container">
-                                    <span class="label">Status:</span>
-                                    <div class="status delivered">Entregue</div>
-                                </div>
-                                <div class="total-container">
-                                    <span class="label">Total:</span>
-                                    <div class="total">R$ 10.950,00</div>
+                                <div class="order-status-total">
+                                    <div class="status-container">
+                                        <span class="label">Status:</span>
+                                        <div class="status 
+                                            {% if pedido.status == 'concluida' %}delivered
+                                            {% elif pedido.status == 'pendente' %}pending
+                                            {% elif pedido.status == 'processando' %}processing
+                                            {% else %}cancelled{% endif %}">
+                                            {% if pedido.status == 'concluida' %}
+                                                Entregue
+                                            {% elif pedido.status == 'pendente' %}
+                                                Pendente
+                                            {% elif pedido.status == 'processando' %}
+                                                Processando
+                                            {% else %}
+                                                Cancelada
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="total-container">
+                                        <span class="label">Total:</span>
+                                        <div class="total">R$ {{ pedido.valor_total|floatformat:2 }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="order-items">
-                        <div class="item-row">
-                            <span class="product-name">Teclado Mecânico</span>
-                            <div class="value-container">
-                                <span class="label">Quantidade</span>
-                                <span class="value">20</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Preço Unitário</span>
-                                <span class="value">R$ 420,00</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Subtotal</span>
-                                <span class="value subtotal-value">R$ 8400,00</span>
-                            </div>
-                        </div>
-                        <div class="item-row">
-                            <span class="product-name">Mouse Logitech</span>
-                            <div class="value-container">
-                                <span class="label">Quantidade</span>
-                                <span class="value">30</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Preço Unitário</span>
-                                <span class="value">R$ 85,00</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Subtotal</span>
-                                <span class="value subtotal-value">R$ 2550,00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="order-card">
-                    <div class="order-header">
-                        <div class="order-info">
-                            <div class="id-date">#PED-007 <span>15/01/2025</span></div>
-                            <div class="order-status-total">
-                                <div class="status-container">
-                                    <span class="label">Status:</span>
-                                    <div class="status pending">Pendente</div>
+                        <div class="order-items">
+                            {% for item in pedido.itens %}
+                            <div class="item-row">
+                                <span class="product-name">{{ item.produto }}</span>
+                                <div class="value-container">
+                                    <span class="label">Quantidade</span>
+                                    <span class="value">{{ item.quantidade }}</span>
                                 </div>
-                                <div class="total-container">
-                                    <span class="label">Total:</span>
-                                    <div class="total">R$ 16.000,00</div>
+                                <div class="value-container">
+                                    <span class="label">Preço Unitário</span>
+                                    <span class="value">R$ {{ item.preco_unitario|floatformat:2 }}</span>
+                                </div>
+                                <div class="value-container">
+                                    <span class="label">Subtotal</span>
+                                    <span class="value subtotal-value">R$ {{ item.subtotal|floatformat:2 }}</span>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="order-items">
-                        <div class="item-row">
-                            <span class="product-name">Notebook Dell</span>
-                            <div class="value-container">
-                                <span class="label">Quantidade</span>
-                                <span class="value">10</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Preço Unitário</span>
-                                <span class="value">R$ 3200,00</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Subtotal</span>
-                                <span class="value subtotal-value">R$ 16000,00</span>
-                            </div>
-                        </div>
-                        <div class="item-row">
-                            <span class="product-name">Monitor LG 24"</span>
-                            <div class="value-container">
-                                <span class="label">Quantidade</span>
-                                <span class="value">15</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Preço Unitário</span>
-                                <span class="value">R$ 850,00</span>
-                            </div>
-                            <div class="value-container">
-                                <span class="label">Subtotal</span>
-                                <span class="value subtotal-value">R$ 12750,00</span>
-                            </div>
-                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                        <h3>Nenhuma compra encontrada</h3>
+                        <p>Este fornecedor ainda não possui compras registradas no sistema.</p>
                     </div>
-                </div>
-
+                {% endif %}
             </div>
         </div>
     </div>
