@@ -499,6 +499,9 @@
                 </div>
               </div>
               <div class="action-buttons">
+                <a href="{% url 'fornecedores:historicoComprasFornecedor' fornecedor.id %}" class="btn-action" title="Editar">
+                  <i class="fa-solid fa-clock-rotate-left"></i>
+                </a>
                 <a href="{% url 'fornecedores:editarFornecedor' fornecedor.id %}" class="btn-action" title="Editar">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </a>

@@ -18,7 +18,7 @@ urlpatterns = [
     
     # Cadastro de compra
     path('compra/', views.compra_fornecedor, name='compraFornecedor'),
-    path('historico/<int:fornecedor_id>/', views.historico_compras_fornecedor, name='historicoComprasFornecedor'),
+    path('historico/<int:fornecedor_id>', views.historico_compras_fornecedor, name='historicoComprasFornecedor'),
     
     # ==================== ROTAS DE API (JSON) ====================
     
