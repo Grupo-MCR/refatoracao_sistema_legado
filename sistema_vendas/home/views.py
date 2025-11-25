@@ -15,7 +15,7 @@ def Login(request):
         obj = request.POST
         fd = obj.dict()
         if validarLogin(fd):
-            return HttpResponseRedirect('/login/')
+            return HttpResponseRedirect('/venda/ponto_venda')
         else:
             return HttpResponseBadRequest("credenciais inválidas")
     else: 
