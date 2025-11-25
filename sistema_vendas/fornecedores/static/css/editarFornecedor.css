@@ -22,56 +22,69 @@ body {
 /* MENU LATERAL */
 /* ===================== */
 .sidebar {
-  width: 230px;
-  background-color: #181818;
+  width: 250px;
+  background: #0d0d0d;
+  border-right: 1px solid #2a2a2a;
   display: flex;
   flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  align-items: center;
 }
 
-.logo {
+.sidebar-header h2 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.menu-icon {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 10px 0;
+}
+
+.menu-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  /* ← agora anima todas as propriedades */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #a3a3a3;
+  /* ← cor padrão adicionada */
+}
+
+
+.menu-item:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  /* ← texto fica branco no hover */
+}
+
+.menu-item.active {
+  background: #ff6b35;
   color: #fff;
-  text-align: center;
-  margin-bottom: 20px;
 }
 
-.sidebar ul {
-  list-style: none;
+.menu-item svg {
+  width: 18px;
+  height: 18px;
 }
 
-.sidebar ul li {
-  margin: 5px 0;
-}
-
-.sidebar a {
-  display: block;
-  color: #bdbdbd;
-  text-decoration: none;
-  padding: 10px 20px;
-  transition: 0.3s;
-}
-
-.sidebar a:hover,
-.sidebar a.active {
-  background-color: #ff7b00;
-  color: #fff;
-  border-radius: 5px;
-}
-
-.logout {
-  text-align: center;
-  padding-bottom: 15px;
-}
-
-.logout a {
-  color: #bdbdbd;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.logout a:hover {
-  color: #ff7b00;
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #2a2a2a;
 }
 
 /* ===================== */
@@ -186,7 +199,7 @@ input::placeholder {
   margin-top: 15px;
 }
 
-.table th, 
+.table th,
 .table td {
   padding: 12px 15px;
   text-align: left;
@@ -289,7 +302,7 @@ input::placeholder {
     padding: 30px 20px;
   }
 
-  .table th, 
+  .table th,
   .table td {
     font-size: 13px;
     padding: 10px;

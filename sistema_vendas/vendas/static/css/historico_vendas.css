@@ -51,15 +51,21 @@ body {
 .menu-item {
     padding: 12px 20px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;
+    /* ← agora anima todas as propriedades */
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 14px;
+    color: #a3a3a3;
+    /* ← cor padrão adicionada */
 }
+
 
 .menu-item:hover {
     background: #1a1a1a;
+    color: #ffffff;
+    /* ← texto fica branco no hover */
 }
 
 .menu-item.active {

@@ -164,7 +164,8 @@ async function submitProduct(e) {
 
         if (data.success) {
             alert(data.message);
-            goBack();
+            // Redirecionar DIRETAMENTE para a URL correta
+            window.location.href = '/produtos/consulta_produto/';
         } else {
             alert('Erro: ' + data.error);
         }
@@ -176,20 +177,21 @@ async function submitProduct(e) {
 
 // Voltar para página de consulta
 function goBack() {
-    window.location.href = '/produtos/consulta/';
+    // URL CORRETA com underscore
+    window.location.href = '/produtos/consulta_produto/';
 }
 
 // Navegação do menu
 function navigateTo(page) {
     const routes = {
-        'vendas': '/vendas/',
+        'vendas': '/ponto_venda/',
         'pagamentos': '/pagamentos/',
-        'produtos': '/produtos/consulta/',
-        'clientes': '/clientes/',
-        'fornecedores': '/fornecedores/',
-        'funcionarios': '/funcionarios/',
-        'vendas-list': '/vendas/lista/',
-        'relatorio': '/relatorios/'
+        'produtos': '/produtos/consulta_produto/',
+        'clientes': '/clientes/consulta_cliente/',
+        'fornecedores': '/fornecedores/consultar/',
+        'funcionarios': '/funcionarios/consultar/',
+        'vendas-list': '/historico_vendas/',
+        'relatorio': '/produtos/relatorio/'
     };
 
     if (routes[page]) {
@@ -201,14 +203,18 @@ function navigateTo(page) {
 
 // Inicializar página
 window.onload = async function () {
-    // Carregar fornecedores
+
+    // força remoção de parâmetros restaurados pelo navegador
+    if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        history.replaceState({}, '', window.location.pathname);
+    }
+
     await loadFornecedores();
 
-    // Verificar se é modo de edição
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
+    const productId = (new URL(window.location.href)).searchParams.get('id');
 
     if (productId) {
         await loadProductData(productId);
     }
 };
+

@@ -26,56 +26,66 @@
 
     /* MENU LATERAL */
     .sidebar {
-      width: 230px;
-      background-color: #181818;
+      width: 250px;
+      background: #0d0d0d;
+      border-right: 1px solid #2a2a2a;
       display: flex;
       flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid #2a2a2a;
+      display: flex;
       justify-content: space-between;
-      padding: 20px 0;
+      align-items: center;
     }
 
-    .logo {
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .sidebar-menu {
+      flex: 1;
+      padding: 10px 0;
+    }
+
+    .menu-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s;  /* ← agora anima todas as propriedades */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #a3a3a3;  /* ← cor padrão adicionada */
+    }
+
+
+   .menu-item:hover {
+    background: #1a1a1a;
+    color: #ffffff;  /* ← texto fica branco no hover */
+    }
+
+    .menu-item.active {
+      background: #ff6b35;
       color: #fff;
-      text-align: center;
-      margin-bottom: 20px;
     }
 
-    .sidebar ul {
-      list-style: none;
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
     }
 
-    .sidebar ul li {
-      margin: 5px 0;
-    }
-
-    .sidebar a {
-      display: block;
-      color: #bdbdbd;
-      text-decoration: none;
-      padding: 10px 20px;
-      transition: 0.3s;
-    }
-
-    .sidebar a:hover,
-    .sidebar a.active {
-      background-color: #ff7b00;
-      color: #fff;
-      border-radius: 5px;
-    }
-
-    .logout {
-      text-align: center;
-      padding-bottom: 15px;
-    }
-
-    .logout a {
-      color: #bdbdbd;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .logout a:hover {
-      color: #ff7b00;
+    .sidebar-footer {
+      padding: 20px;
+      border-top: 1px solid #2a2a2a;
     }
 
     /* CONTEÚDO PRINCIPAL */
@@ -94,24 +104,60 @@
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 500;
       color: #fff;
     }
 
-    /* BOTÕES */
+    /* BARRA DE BUSCA E BOTÃO */
+    .search-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      background-color: #111;
+      border: 1px solid #333;
+      padding: 10px 40px 10px 15px;
+      border-radius: 4px;
+      color: #fff;
+      width: 300px;
+      font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+      color: #777;
+    }
+
+    .search-box i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ff6b35;
+      cursor: pointer;
+    }
+
     .btn-novo {
-      background-color: #ff7b00;
+      background-color: #ff6b35;
       color: #fff;
       text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 14px;
       transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn-novo:hover {
-      background-color: #e56f00;
+      background-color: #e55a24;
     }
 
     /* MENSAGENS */
@@ -136,43 +182,67 @@
       color: #fff;
     }
 
-    /* TABELA */
-    .table-container {
+    /* CARDS DE FORNECEDORES */
+    .fornecedores-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .fornecedor-card {
       background-color: #111;
+      border: 1px solid #2a2a2a;
       border-radius: 8px;
-      overflow: hidden;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .fornecedor-card:hover {
+      background-color: #1a1a1a;
+      border-color: #ff6b35;
     }
 
-    th {
-      background-color: #ff7b00;
-      color: #fff;
-      padding: 15px;
-      text-align: left;
-      font-weight: 500;
+    .fornecedor-info {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .info-label {
+      font-size: 11px;
+      color: #888;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value {
       font-size: 14px;
+      color: #fff;
     }
 
-    td {
-      padding: 15px;
-      border-bottom: 1px solid #2a2a2a;
-      color: #ccc;
+    .fornecedor-nome {
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
     }
 
-    tr:hover {
-      background-color: #252525;
-    }
-
-    /* BOTÕES DE AÇÃO */
+    /* AÇÕES */
     .action-buttons {
       display: flex;
       gap: 10px;
       align-items: center;
+      margin-left: 20px;
     }
 
     .btn-action {
@@ -183,33 +253,101 @@
       cursor: pointer;
       transition: 0.3s;
       padding: 8px;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
     }
 
     .btn-action:hover {
-      color: #ff7b00;
+      background-color: #2a2a2a;
+      color: #ff6b35;
     }
 
     .btn-action.delete:hover {
       color: #dc3545;
     }
 
+    /* ESTADO VAZIO */
     .empty-state {
       text-align: center;
-      padding: 60px 20px;
+      padding: 80px 20px;
       color: #888;
     }
 
+    .empty-state i {
+      font-size: 64px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .empty-state h3 {
+      font-size: 20px;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
     .empty-state a {
-      color: #ff7b00;
-      text-decoration: underline;
+      color: #ff6b35;
+      text-decoration: none;
+      font-weight: 500;
     }
 
     .empty-state a:hover {
-      color: #e56f00;
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 1200px) {
+      .fornecedor-info {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 180px;
+      }
+
+      .content {
+        padding: 30px 20px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .search-container {
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .search-box input {
+        width: 100%;
+      }
+
+      .fornecedor-info {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        margin-left: 0;
+        margin-top: 15px;
+      }
     }
   </style>
   <script>
-    // Remove mensagens automaticamente após 5 segundos
+    // Remove mensagens automaticamente após 3 segundos
     document.addEventListener('DOMContentLoaded', function() {
       const alerts = document.querySelectorAll('.alert');
       alerts.forEach(function(alert) {
@@ -219,7 +357,7 @@
           setTimeout(function() {
             alert.remove();
           }, 500);
-        }, 3000); // 5000ms = 5 segundos
+        }, 3000);
       });
     });
   </script>
@@ -227,30 +365,102 @@
 <body>
   <div class="container">
     <!-- MENU LATERAL -->
-    <aside class="sidebar">
-      <h2 class="logo">Sistema</h2>
-      <nav>
-        <ul>
-          <li><a href="#">Ponto de Vendas</a></li>
-          <li><a href="#">Pagamentos</a></li>
-          <li><a href="#">Produtos</a></li>
-          <li><a href="#">Clientes</a></li>
-          <li><a href="{% url 'consultaFornecedor' %}" class="active">Fornecedores</a></li>
-          <li><a href="#">Funcionários</a></li>
-          <li><a href="#">Vendas</a></li>
-          <li><a href="#">Relatório</a></li>
-        </ul>
-      </nav>
-      <div class="logout">
-        <a href="#">Sair</a>
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>Sistema</h2>
+        <div class="menu-icon">☰</div>
       </div>
-    </aside>
+      <div class="sidebar-menu">
+        <div class="menu-item" onclick='location.href="{% url 'ponto_venda' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          Ponto de Vendas
+        </div>
+        <div class="menu-item" onclick='location.href="{% url 'pagamentos' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="5" width="20" height="14" rx="2" />
+            <line x1="2" y1="10" x2="22" y2="10" />
+          </svg>
+          Pagamentos
+        </div>
+        <div class="menu-item" onclick='location.href="{% url 'produtos:consulta_produto' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Produtos
+        </div>
+        <div class="menu-item" onclick='location.href="{% url 'clientes:consulta_cliente' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          Clientes
+        </div>
+        <div class="menu-item active" onclick='location.href="{% url 'fornecedores:consultaFornecedor' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="8.5" cy="7" r="4" />
+            <polyline points="17 11 19 13 23 9" />
+          </svg>
+          Fornecedores
+        </div>
+        <div class="menu-item" onclick='location.href="{% url 'funcionarios:consultar' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          Funcionários
+        </div>
+        <div class="menu-item" onclick='location.href="{% url 'historico_vendas' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          Vendas
+        </div>
+        <div class="menu-item" onclick='location.href="{% url 'produtos:relatorio_produtos' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          Relatório
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="menu-item" onclick='location.href="{% url 'Login' %}"'>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sair
+        </div>
+      </div>
+    </div>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="content">
       <div class="header">
         <h1>Fornecedores</h1>
-        <a href="{% url 'cadastroFornecedor' %}" class="btn-novo">+ Novo Fornecedor</a>
+        <div class="search-container">
+          <div class="search-box">
+            <input type="text" placeholder="Pesquisar...">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <a href="{% url 'fornecedores:cadastroFornecedor' %}" class="btn-novo">
+            <i class="fa-solid fa-plus"></i>
+            Novo Fornecedor
+          </a>
+        </div>
       </div>
 
       <!-- Mensagens -->
@@ -264,54 +474,55 @@
         </div>
       {% endif %}
 
-      <!-- TABELA -->
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>CNPJ</th>
-              <th>E-mail</th>
-              <th>Celular</th>
-              <th>Cidade</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% if fornecedores %}
-              {% for fornecedor in fornecedores %}
-                <tr>
-                  <td>{{ fornecedor.nome }}</td>
-                  <td>{{ fornecedor.cnpj }}</td>
-                  <td>{{ fornecedor.email|default:"—" }}</td>
-                  <td>{{ fornecedor.celular|default:"—" }}</td>
-                  <td>{{ fornecedor.cidade|default:"—" }}</td>
-                  <td>
-                    <div class="action-buttons">
-                      <a href="{% url 'editarFornecedor' fornecedor.id %}" class="btn-action">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                      </a>
-                      <form method="POST" action="{% url 'excluirFornecedor' fornecedor.id %}" style="display: inline; margin: 0;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-action delete" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">
-                          <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                      </form>
-                    </div>
-                  </td>
-                </tr>
-              {% endfor %}
-            {% else %}
-              <tr>
-                <td colspan="6" class="empty-state">
-                  <p>Nenhum fornecedor cadastrado.</p>
-                  <p><a href="{% url 'cadastroFornecedor' %}">Clique aqui para cadastrar o primeiro fornecedor</a></p>
-                </td>
-              </tr>
-            {% endif %}
-          </tbody>
-        </table>
-      </div>
+      <!-- LISTA DE FORNECEDORES -->
+      {% if fornecedores %}
+        <div class="fornecedores-list">
+          {% for fornecedor in fornecedores %}
+            <div class="fornecedor-card">
+              <div class="fornecedor-info">
+                <div class="info-item">
+                  <span class="info-label">Nome</span>
+                  <span class="fornecedor-nome">{{ fornecedor.nome }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">CNPJ</span>
+                  <span class="info-value">{{ fornecedor.cnpj }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">E-mail</span>
+                  <span class="info-value">{{ fornecedor.email|default:"—" }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Celular</span>
+                  <span class="info-value">{{ fornecedor.celular|default:"—" }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Cidade</span>
+                  <span class="info-value">{{ fornecedor.cidade|default:"—" }}</span>
+                </div>
+              </div>
+              <div class="action-buttons">
+                <a href="{% url 'fornecedores:editarFornecedor' fornecedor.id %}" class="btn-action" title="Editar">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <form method="POST" action="{% url 'fornecedores:excluirFornecedor' fornecedor.id %}" style="display: inline; margin: 0;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-action delete" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')" title="Excluir">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fa-solid fa-box-open"></i>
+          <h3>Nenhum fornecedor cadastrado</h3>
+          <p>Comece adicionando seu primeiro fornecedor ao sistema</p>
+          <a href="{% url 'fornecedores:cadastroFornecedor' %}">+ Cadastrar primeiro fornecedor</a>
+        </div>
+      {% endif %}
     </main>
   </div>
 </body>

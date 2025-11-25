@@ -20,6 +20,10 @@ body {
     border-right: 1px solid #2a2a2a;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
 }
 
 .sidebar-header {
@@ -33,35 +37,41 @@ body {
 .sidebar-header h2 {
     font-size: 16px;
     font-weight: 500;
+    color: #ffffff;
 }
 
 .menu-icon {
     cursor: pointer;
     padding: 5px;
+    color: #ffffff;
 }
 
 .sidebar-menu {
     flex: 1;
     padding: 10px 0;
+    overflow-y: auto;
 }
 
 .menu-item {
     padding: 12px 20px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;  /* ← agora anima todas as propriedades */
     display: flex;
     align-items: center;
     gap: 12px;
     font-size: 14px;
+    color: #a3a3a3;  /* ← cor padrão adicionada */
 }
+
 
 .menu-item:hover {
     background: #1a1a1a;
+    color: #ffffff;  /* ← texto fica branco no hover */
 }
 
 .menu-item.active {
     background: #ff6b35;
-    color: #fff;
+    color: #ffffff;
 }
 
 .menu-item svg {

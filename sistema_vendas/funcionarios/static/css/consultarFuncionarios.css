@@ -2,320 +2,357 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-    background-color: black;
+    background: #1a1a1a;
+    color: #ffffff;
+    display: flex;
+    min-height: 100vh;
 }
 
-aside {
-    width: 100%;
-    max-width: 220px;
-    background-color: #000000;
-    color: #A3A3A3;
-    padding: 20px 0px;
-    display: grid;
-    height: 100%;
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    width: 250px;
+    background: #0d0d0d;
+    border-right: 1px solid #2a2a2a;
+    display: flex;
+    flex-direction: column;
     position: fixed;
-    z-index: 1;
-    top: 0;
+    height: 100vh;
     left: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    grid:
-        'logo'
-        'nav'
-        'gap'
-        'logout';
-    grid-template-rows: 15% 60% 10% 20%;
-    border-right: 2px solid #737373;
+    top: 0;
 }
 
-.logo {
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #2a2a2a;
     display: flex;
-    grid-area: logo;
-    gap: 2px;
-    font-weight: bold;
-    font-size: 20px;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-    border-bottom: 2px solid #737373;
-    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    padding: 10px 20px 10px 20px;
 }
 
-.logo span {
-	color:  #F97316;
-	margin-left: 4px;
-}
-
-.logo-img {
-	width: 180px;
-	height: auto;
-	align-self: center;
-}
-
-nav {
-	grid-area: nav;
-    width: 100%;
-}
-nav ul {
-    list-style: none;
-    width: 100%;
-}
-
-nav ul li {
-    width: 100%;
-    max-width: 200px;
-    padding: 1px 15px 1px 15px;
-    margin: 5px 10px 5px 10px
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #A3A3A3;
+.sidebar-header h2 {
     font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 3vh;
-    margin-bottom: 3vh;
-}
-
-nav ul h3{
-    text-decoration: none;
-    color: #A3A3A3;
-    font-size: 16px;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-}
-
-nav ul li a .material-icons,
-.logout a .material-icons {
-    font-size: 18px;
-    color: #A3A3A3;
-}
-
-#navFuncionarios {
-    background-color: #F97316;
-    border-radius: 10px;
-}
-
-#navFuncionariosText {
+    font-weight: 500;
     color: #ffffff;
 }
 
-.logout {
-    grid-area: logout;
-    margin: 20px 0px 20px 0px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    border-top: 2px solid #737373;
-    padding: 20px 20px 15px 20px;
-
+.menu-icon {
+    cursor: pointer;
+    padding: 5px;
+    color: #ffffff;
 }
 
-.logout h4 {
-    margin-bottom: 10px;
+.sidebar-menu {
+    flex: 1;
+    padding: 10px 0;
+    overflow-y: auto;
 }
 
-.logout a {
+.menu-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: #A3A3A3;
-    font-size: 16px;
+    gap: 12px;
+    font-size: 14px;
+    color: #a3a3a3;
 }
 
+.menu-item:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.menu-item.active {
+    background: #ff6b35;
+    color: #ffffff;
+}
+
+.menu-item svg {
+    width: 18px;
+    height: 18px;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #2a2a2a;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+main {
+    margin-left: 250px;
+    padding: 40px;
+    width: calc(100% - 250px);
+    min-height: calc(100vh - 80px);
+}
+
+/* ==================== HEADER ==================== */
 header {
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
     justify-content: space-between;
-    max-height: 20%;
-    height: auto;
+    align-items: flex-start;
     gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
 .headerTitle {
-    max-width: 400px;
-    width: 40%
+    flex: 1;
+    min-width: 300px;
+}
+
+.headerTitle h2 {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.sub {
+    color: #737373;
+    font-size: 14px;
 }
 
 .headerSearch {
-    max-width: 420px;
-    width: 30%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    gap: 10px;
     align-items: center;
+    flex: 1;
+    min-width: 250px;
+    max-width: 400px;
+}
+
+.headerSearch input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    background-color: #171717;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.headerSearch input:focus {
+    border-color: #F97316;
+}
+
+.headerSearch input::placeholder {
+    color: #737373;
 }
 
 .searchButton {
     background-color: #F97316;
-    max-width: 38px;
-    max-height: 38px;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #737373;
-    border-radius: 5px;
-    color: #FFFFFF;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.searchButton:hover {
+    background-color: #ea580c;
 }
 
 .headerButton {
-    align-content: center;
-    max-width: 180px;
-    width: 30%
+    display: flex;
+    align-items: center;
 }
 
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #737373;
-    border-radius: 5px;
-    background-color: #171717;
-    color: #FFFFFF;
-    max-height: 37px;
-    max-width: 420px;
+.headerButton a {
+    text-decoration: none;
 }
 
 .newFuncionarioButton {
     background-color: #F97316;
-    color: #fff;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: bold;
+    color: #ffffff;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    width: 100%;
-    align-self: flex-start;
-    max-width: 240px;
+    transition: background-color 0.2s;
+    white-space: nowrap;
 }
 
-main {
-    background-color: #000000;
-    padding: 40px 40px 20px 260px;
-    min-width: 0;
-    display: flex;
-    gap: 2vh;
-    min-height: 86vh;
-    height: auto;
-    flex-direction: column;
+.newFuncionarioButton:hover {
+    background-color: #ea580c;
 }
 
-h2 {
-    color: #ffffff;
-    font-weight: 800;
-    margin-bottom: 4px;
-}
-
-.sub {
-  color: #555;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
+/* ==================== CARDS ==================== */
 #cardsDiv {
-    max-height: 80%;
-    height: auto;
-    gap: 2vh;
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .funcionarioCard {
     display: grid;
-    max-height: 24vh;
-    height: 100%;
-    width: 100%;
-    background-color: #171717;
-    color: #ffffff;
-    border: 2px solid #737373;
-    border-radius: 10px;
     grid-template-areas:
         "nome nome nome btn"
         "cpf cargo email endereco";
-    grid-template-columns: 9vw 20vw 22vw 20vw;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 15px 5px 15px;
-    gap: 1vw;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px 30px;
+    background-color: #171717;
+    color: #ffffff;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.funcionarioCard:hover {
+    border-color: #F97316;
+    transform: translateY(-2px);
 }
 
 .funcionarioCardNome {
     grid-area: nome;
-    overflow: auto;
-    overflow-wrap: break-word;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.funcionarioCardCpf,
+.funcionarioCardCargo,
+.funcionarioCardEmail,
+.funcionarioCardEndereco {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .funcionarioCardCpf {
     grid-area: cpf;
-    /* max-width: 180px; */
-    width: 100%;
-    overflow: auto;
-    overflow-wrap: break-word;
 }
 
 .funcionarioCardCargo {
     grid-area: cargo;
-    /* max-width: 180px; */
-    width: 100%;
-    overflow: auto;
-    overflow-wrap: break-word;
 }
 
 .funcionarioCardEmail {
     grid-area: email;
-    /*max-width: 180px;*/
-    width: 100%;
-    overflow: auto;
-    overflow-wrap: break-word;
 }
 
 .funcionarioCardEndereco {
     grid-area: endereco;
-    /*max-width: 180px;*/
-    width: 100%;
-    overflow: auto;
-    overflow-wrap: break-word;
+}
+
+.funcionarioCard h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #737373;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.funcionarioCard i {
+    font-style: normal;
+    font-size: 14px;
+    color: #a3a3a3;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .funcionarioCardEditButton {
     grid-area: btn;
     display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
+    gap: 10px;
     justify-content: flex-end;
-    gap: 1vw;
+    align-items: flex-start;
 }
 
 .cardButton {
     background-color: #000000;
-    max-width: 38px;
-    max-height: 38px;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #737373;
-    border-radius: 5px;
-    color: #A3A3A3;
-    text-align: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    color: #a3a3a3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    text-decoration: none;
 }
 
+.cardButton:hover {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-color: #F97316;
+}
+
+.cardButton.delete-btn:hover {
+    background-color: #7f1d1d;
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+/* ==================== FOOTER ==================== */
 footer {
-    background-color: #000000;
+    margin-left: 250px;
+    padding: 30px 40px;
     text-align: center;
-    padding: 38px 40px 35px 260px;
     font-size: 14px;
-    color: #a3a3a3;
-    border-top: 2px solid #737373;
-    height: 14vh;
+    color: #737373;
+    border-top: 2px solid #2a2a2a;
+    background-color: #000000;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1200px) {
+    .funcionarioCard {
+        grid-template-areas:
+            "nome nome nome"
+            "cpf cargo email"
+            "endereco endereco btn";
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    main,
+    footer {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    header {
+        flex-direction: column;
+    }
+
+    .funcionarioCard {
+        grid-template-areas:
+            "nome"
+            "cpf"
+            "cargo"
+            "email"
+            "endereco"
+            "btn";
+        grid-template-columns: 1fr;
+    }
+
+    .funcionarioCardEditButton {
+        justify-content: flex-start;
+    }
 }
