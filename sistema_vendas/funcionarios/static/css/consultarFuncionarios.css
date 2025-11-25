@@ -205,7 +205,7 @@ header {
         "cpf cargo email endereco";
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 20px 30px;
-    background-color: #171717;
+    background-color: #000000;
     color: #ffffff;
     border: 1px solid #2a2a2a;
     border-radius: 10px;
@@ -277,7 +277,7 @@ header {
 }
 
 .cardButton {
-    background-color: #000000;
+    background-color: #171717;
     width: 40px;
     height: 40px;
     padding: 0;

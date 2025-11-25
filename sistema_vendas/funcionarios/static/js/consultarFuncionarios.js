@@ -96,9 +96,10 @@ function buildCard(data) {
     let iconEditar = document.createElement('i');
     iconEditar.classList.add("fa-solid");
     iconEditar.classList.add("fa-pen-to-square");
-    iconEditar.classList.add("cardButton");
+    
 
     let botaoEditar = document.createElement('a');
+    botaoEditar.classList.add("cardButton");
     botaoEditar.href = "http://127.0.0.1:8000/funcionarios/editar/id=" + data['id'];
     botaoEditar.appendChild(iconEditar);
 
@@ -106,11 +107,11 @@ function buildCard(data) {
     let iconDeletar = document.createElement('i');
     iconDeletar.classList.add("fa-solid")
     iconDeletar.classList.add("fa-trash-can");
-    iconDeletar.classList.add("cardButton");
-
+    
     let botaoDeletar = document.createElement('a');
     botaoDeletar.classList.add("botaoDeletar");
     botaoDeletar.href = "deletar_funcionario";
+    botaoDeletar.classList.add("cardButton");
     botaoDeletar.onclick = function() {deletarFuncionario(event, data['id'])};
     botaoDeletar.appendChild(iconDeletar);
 
