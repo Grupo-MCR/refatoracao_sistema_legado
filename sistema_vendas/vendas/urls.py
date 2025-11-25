@@ -20,6 +20,6 @@ urlpatterns = [
     path('processar_pagamento/', views.processar_pagamento, name='processar_pagamento'),
     
     # APIs para Histórico de Vendas (NOVAS)
-    path('api/vendas/periodo/', views.buscar_vendas_periodo, name='buscar_vendas_periodo'),
-    path('api/vendas/total/', views.buscar_total_vendas_data, name='buscar_total_vendas_data'),
+    path('api/periodo/', views.buscar_vendas_periodo, name='buscar_vendas_periodo'),
+    path('api/total/', views.buscar_total_vendas_data, name='buscar_total_vendas_data'),
 ]

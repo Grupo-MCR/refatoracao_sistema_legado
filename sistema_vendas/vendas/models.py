@@ -21,7 +21,7 @@ class Venda(models.Model):
     
     class Meta:
         db_table = 'vendas_venda'
-        managed = False  # IMPORTANTE: Django não vai tentar criar/alterar a tabela
+        managed = True  # IMPORTANTE: Django não vai tentar criar/alterar a tabela
         verbose_name = 'Venda'
         verbose_name_plural = 'Vendas'
     
@@ -59,7 +59,7 @@ class ItemVenda(models.Model):
     
     class Meta:
         db_table = 'vendas_itemvenda'
-        managed = False  # IMPORTANTE: Django não vai tentar criar/alterar a tabela
+        managed = True  # IMPORTANTE: Django não vai tentar criar/alterar a tabela
         verbose_name = 'Item de Venda'
         verbose_name_plural = 'Itens de Venda'
     

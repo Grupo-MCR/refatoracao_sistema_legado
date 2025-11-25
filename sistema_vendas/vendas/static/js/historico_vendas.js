@@ -1,3 +1,7 @@
+const URL_PERIODO = URL.parse("http://127.0.0.1:8000/venda/api/periodo/")
+const URL_TOTAL = URL.parse("http://127.0.0.1:8000/venda/api/total/");
+
+
 // Máscara para data DD/MM/AAAA
 function mascaraData(input) {
     let valor = input.value.replace(/\D/g, '');
@@ -61,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Função para pesquisar histórico de vendas
-function pesquisarHistorico() {
+async function pesquisarHistorico() {
     const dataInicio = document.getElementById('dataInicio').value;
     const dataFim = document.getElementById('dataFim').value;
     
@@ -78,28 +82,14 @@ function pesquisarHistorico() {
     
     // Aqui você fará a chamada para o backend
     console.log('Pesquisando vendas de', dataInicio, 'até', dataFim);
+    let vendasPeriodo = await buscarVendasPorPeriodo(dataInicio, dataFim);
     
     // Exemplo de como preencher a tabela (simulação)
-    exibirResultadosHistorico([
-        {
-            codigo: '001',
-            data: '15/11/2024',
-            cliente: 'João Silva',
-            total: 'R$ 150,00',
-            obs: 'Pagamento à vista'
-        },
-        {
-            codigo: '002',
-            data: '16/11/2024',
-            cliente: 'Maria Santos',
-            total: 'R$ 320,50',
-            obs: 'Parcelado 3x'
-        }
-    ]);
+    exibirResultadosHistorico(vendasPeriodo);
 }
 
 // Função para pesquisar total de vendas por data
-function pesquisarTotal() {
+async function pesquisarTotal() {
     const dataVenda = document.getElementById('dataVenda').value;
     
     // Validação básica
@@ -115,9 +105,10 @@ function pesquisarTotal() {
     
     // Aqui você fará a chamada para o backend
     console.log('Pesquisando total de vendas em', dataVenda);
+    let totalVendasDia = await buscarTotalPorData(dataVenda);
     
     // Exemplo de como exibir o resultado (simulação)
-    exibirTotal('R$ 1.850,75');
+    exibirTotal(totalVendasDia);
 }
 
 // Função para validar data no formato DD/MM/AAAA
@@ -180,7 +171,7 @@ function exibirTotal(total) {
 // Exemplo de função para fazer requisição ao backend
 async function buscarVendasPorPeriodo(dataInicio, dataFim) {
     try {
-        const response = await fetch('/api/vendas/periodo', {
+        const response = await fetch(URL_PERIODO, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -196,7 +187,8 @@ async function buscarVendasPorPeriodo(dataInicio, dataFim) {
         }
         
         const dados = await response.json();
-        return dados;
+        console.log(dados);
+        return dados.vendas;
     } catch (error) {
         console.error('Erro:', error);
         alert('Erro ao buscar dados do servidor');
@@ -207,7 +199,7 @@ async function buscarVendasPorPeriodo(dataInicio, dataFim) {
 // Exemplo de função para buscar total por data
 async function buscarTotalPorData(data) {
     try {
-        const response = await fetch('/api/vendas/total', {
+        const response = await fetch(URL_TOTAL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -222,6 +214,7 @@ async function buscarTotalPorData(data) {
         }
         
         const dados = await response.json();
+        console.log(dados);
         return dados.total;
     } catch (error) {
         console.error('Erro:', error);

@@ -284,9 +284,18 @@ def processar_pagamento(request):
             }, status=400)
         
         # Atualiza as observações da venda com informações de pagamento
-        info_pagamento = f"\nPagamento: Dinheiro R${dinheiro}, Cartão R${cartao}, Cheque R${cheque}"
+        info_pagamento = f" \nPagamento:"
+        if(dinheiro > 0):
+            info_pagamento = info_pagamento + f" Dinheiro R${dinheiro}";
+        
+        if(cartao > 0):
+            info_pagamento = info_pagamento + f" Cartão R${cartao}"
+        
+        if(cheque > 0):
+            info_pagamento = info_pagamento + f" Cheque R${cheque}"
+        
         if observacoes:
-            info_pagamento = f"{observacoes}{info_pagamento}"
+            info_pagamento = f"{observacoes}; {info_pagamento}"
         
         venda.observacoes = info_pagamento
         venda.save()
@@ -325,6 +334,7 @@ def buscar_vendas_periodo(request):
     """
     try:
         data = json.loads(request.body)
+        print(data)
         data_inicio = data.get('dataInicio')
         data_fim = data.get('dataFim')
         
