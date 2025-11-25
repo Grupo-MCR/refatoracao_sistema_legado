@@ -92,20 +92,20 @@ def editar_fornecedor(request, fornecedor_id):
         
         template = loader.get_template('editarFornecedor.html')
         contexto = {
-            'id':fornecedor_id,
-            'nome':fornecedor['nome'],
-            'cnpj':fornecedor['cnpj'],
-            'email':fornecedor['email'],
-            'telefone':fornecedor['telefone'],
-            'celular':fornecedor['celular'],
-            'endereco':fornecedor['endereco'],
-            'numero':fornecedor['numero'],
-            'complemento':fornecedor['complemento'],
-            'bairro':fornecedor['bairro'],
-            'cep':fornecedor['cep'],
-            'cidade':fornecedor['cidade'],
-            'estado':fornecedor['estado'],
-            }
+            'id': fornecedor_id,
+            'nome': fornecedor.nome,
+            'cnpj': fornecedor.cnpj,
+            'email': fornecedor.email,
+            'telefone': fornecedor.telefone,
+            'celular': fornecedor.celular,
+            'endereco': fornecedor.endereco,
+            'numero': fornecedor.numero,
+            'complemento': fornecedor.complemento,
+            'bairro': fornecedor.bairro,
+            'cep': fornecedor.cep,
+            'cidade': fornecedor.cidade,
+            'estado': fornecedor.estado,
+        }
         return HttpResponse(template.render(contexto, request))
     
     elif request.method == 'POST':
@@ -197,7 +197,7 @@ def historico_compras_fornecedor(request, fornecedor_id):
                 'pedidos_pendentes': sum(1 for compra in resultado.get('compras', []) if compra.get('status') == 'pendente')
             }
             
-            template = loader.get_template('historicoCompras.html')
+            template = loader.get_template('historicoComprasInterface.html')
             return HttpResponse(template.render(context, request))
             
         except Fornecedor.DoesNotExist:
@@ -205,7 +205,7 @@ def historico_compras_fornecedor(request, fornecedor_id):
         except Exception as e:
             return HttpResponseBadRequest(f"Erro ao carregar histórico: {str(e)}")
     else:
-        return HttpResponseBadRequest("método de request inválido :c"
+        return HttpResponseBadRequest("método de request inválido :c")
 
 
 # ==================== VIEWS DE API (JSON) ====================
