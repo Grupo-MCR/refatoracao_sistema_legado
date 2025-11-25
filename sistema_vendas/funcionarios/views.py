@@ -53,7 +53,7 @@ def EditarFuncionario(request, id):
     elif request.method == 'POST':
         try:
             body = request.POST
-            message = editarFuncionario(body, 1)
+            message = editarFuncionario(body, id)
             return HttpResponseRedirect('/funcionarios/cadastrar', False, message)
         except Exception:
             return HttpResponseBadRequest("campos obrigatórios não preenchidos ou informações inválidas")
