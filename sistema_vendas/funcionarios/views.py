@@ -29,7 +29,7 @@ def CadastrarFuncionario(request):
         try:
             body = request.POST
             message = salvarFuncionario(body)
-            return HttpResponseRedirect('/funcionarios/cadastrar', False, message)
+            return HttpResponseRedirect('/funcionarios/consultar', False, message)
         except Exception:
             return HttpResponseBadRequest("campos obrigatórios não preenchidos ou informações inválidas")
     else:
@@ -62,7 +62,7 @@ def EditarFuncionario(request, id):
         try:
             body = request.POST
             message = editarFuncionario(body, id)
-            return HttpResponseRedirect('/funcionarios/cadastrar', False, message)
+            return HttpResponseRedirect('/funcionarios/consultar', False, message)
         except Exception:
             return HttpResponseBadRequest("campos obrigatórios não preenchidos ou informações inválidas")
     else:
