@@ -40,7 +40,7 @@ def cadastrar_fornecedor(request):
             
             if sucesso:
                 messages.success(request, mensagem)
-                return redirect('consultaFornecedor')
+                return redirect('/fornecedores/consultar/')
             else:
                 messages.error(request, mensagem)
                 template = loader.get_template('cadastrarFornecedor.html')
@@ -88,7 +88,7 @@ def editar_fornecedor(request, fornecedor_id):
         
         if not fornecedor:
             messages.error(request, "Fornecedor não encontrado")
-            return redirect('consultaFornecedor')
+            return redirect('/fornecedores/consultar/')
         
         template = loader.get_template('editarFornecedor.html')
         contexto = {
@@ -131,7 +131,7 @@ def editar_fornecedor(request, fornecedor_id):
             
             if sucesso:
                 messages.success(request, mensagem)
-                return redirect('consultaFornecedor')
+                return redirect('/fornecedores/consultar/')
             else:
                 messages.error(request, mensagem)
                 fornecedor = FornecedorService.buscar_fornecedor(fornecedor_id)
@@ -161,7 +161,7 @@ def excluir_fornecedor(request, fornecedor_id):
         else:
             messages.error(request, mensagem)
         
-        return redirect('consultaFornecedor')
+        return redirect('/fornecedores/consultar/')
     else:
         return HttpResponseBadRequest("método de request inválido :c")
 
