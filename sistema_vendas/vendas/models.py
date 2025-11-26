@@ -2,6 +2,7 @@ from django.db import models
 from clientes.models import Cliente
 from produtos.models import Produto
 
+# Create your models here.
 class Venda(models.Model):
     """
     Representa uma venda no sistema.
@@ -65,3 +66,4 @@ class ItemVenda(models.Model):
     
     def __str__(self):
         return f"Item {self.id} - Venda {self.venda_id.id}"
+
