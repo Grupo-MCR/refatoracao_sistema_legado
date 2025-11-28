@@ -1,0 +1,565 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Pagamentos</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .box-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 22px;
+      background-color: #141414;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+      align-items: start;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field label {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #ddd;
+      font-weight: 600;
+    }
+
+    .field input {
+      width: 100%;
+      max-width: 260px;
+      margin: 0 auto;
+      height: 46px;
+      padding: 10px 14px;
+      background-color: #1b1b1b;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 6px;
+      text-align: center;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .obs-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+      background-color: #141414;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .obs-box label {
+      color: #ddd;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .obs-box textarea {
+      width: 100%;
+      min-height: 180px;
+      max-height: 320px;
+      background-color: #1b1b1b;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 6px;
+      padding: 14px;
+      resize: vertical;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .btn-box {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .btn-finalizar {
+      background-color: #ff6600;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 30px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: none;
+    }
+
+    .btn-finalizar:hover {
+      background-color: #ff7f2a;
+    }
+
+    .info-venda-box {
+      background-color: #1b1b1b;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .info-venda-box h3 {
+      color: #ff6600;
+      margin: 0 0 10px 0;
+    }
+
+    .info-venda-box p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    .info-venda-box .total-venda {
+      margin: 10px 0 5px 0;
+      font-size: 24px;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    @media (max-width: 1200px) {
+      .box-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .box-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .field input {
+        max-width: 200px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .box-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .field input {
+        max-width: 220px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .box-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field input {
+        max-width: 100%;
+      }
+
+      .btn-finalizar {
+        max-width: 320px;
+        margin: 0 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Sistema</h2>
+      <div class="menu-icon">☰</div>
+    </div>
+    <div class="sidebar-menu active">
+      <div class="menu-item" onclick='location.href="{% url 'ponto_venda' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        Ponto de Vendas
+      </div>
+      <div class="menu-item" onclick='location.href="{% url 'produtos:consulta_produto' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        Produtos
+      </div>
+      <div class="menu-item" onclick='location.href="{% url 'clientes:consulta_cliente' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        Clientes
+      </div>
+      <div class="menu-item" onclick='location.href="{% url 'fornecedores:consultaFornecedor' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="8.5" cy="7" r="4" />
+          <polyline points="17 11 19 13 23 9" />
+        </svg>
+        Fornecedores
+      </div>
+      <div class="menu-item" onclick='location.href="{% url 'fornecedores:compraFornecedor' %}"'>
+                <i class="fa-solid fa-boxes-stacked"></i>
+                compra
+            </div>
+      <div class="menu-item" onclick='location.href="{% url 'funcionarios:consultar' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        Funcionários
+      </div>
+      <div class="menu-item" onclick='location.href="{% url 'historico_vendas' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        Vendas
+      </div>
+      <div class="menu-item" onclick='location.href="{% url 'produtos:relatorio_produtos' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        Relatório
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="menu-item" onclick='location.href="{% url 'Login' %}"'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Sair
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1>Pagamentos</h1>
+
+    {% if venda %}
+    <div class="box info-venda-box">
+      <h3>Venda #{{ venda.id }}</h3>
+      <p>Cliente: <strong>{{ venda.cliente }}</strong></p>
+      <p class="total-venda">Total da Venda: R$ {{ venda.total|floatformat:2 }}</p>
+    </div>
+    {% else %}
+    <div class="box info-venda-box">
+      <p style="color: #ff9800;">⚠️ Nenhuma venda em andamento. <a href="/venda/ponto_venda/"
+          style="color: #ff6600;">Voltar ao PDV</a></p>
+    </div>
+    {% endif %}
+
+    <div class="box box-grid">
+      <div class="field">
+        <label>Dinheiro (R$)</label>
+        <input type="text" id="dinheiro" placeholder="0,00" value="0,00">
+      </div>
+
+      <div class="field">
+        <label>Cartão (R$)</label>
+        <input type="text" id="cartao" placeholder="0,00" value="0,00">
+      </div>
+
+      <div class="field">
+        <label>Cheque (R$)</label>
+        <input type="text" id="cheque" placeholder="0,00" value="0,00">
+      </div>
+
+      <div class="field">
+        <label>Total Pago (R$)</label>
+        <input type="text" id="total" placeholder="0,00" value="0,00" {% if venda %}data-total-venda="{{ venda.total }}"
+          {% endif %} readonly>
+      </div>
+
+      <div class="field">
+        <label>Troco (R$)</label>
+        <input type="text" id="troco" placeholder="0,00" value="0,00" readonly>
+      </div>
+    </div>
+
+    <div class="box obs-box">
+      <label for="obs">Observações</label>
+      <textarea id="obs" placeholder="Digite observações sobre o pagamento..."></textarea>
+    </div>
+
+    <div class="box btn-box" style="border:none; padding:0;">
+      <button class="btn-finalizar" id="btnFinalizar">Finalizar Venda</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('💳 Script de pagamentos carregado!');
+
+      // Elementos do formulário
+      const dinheiroInput = document.getElementById('dinheiro');
+      const cartaoInput = document.getElementById('cartao');
+      const chequeInput = document.getElementById('cheque');
+      const totalInput = document.getElementById('total');
+      const trocoInput = document.getElementById('troco');
+      const obsTextarea = document.getElementById('obs');
+      const btnFinalizar = document.getElementById('btnFinalizar');
+
+      // Obtém o total da venda do data attribute
+      const totalVenda = parseFloat(totalInput.dataset.totalVenda || 0);
+      console.log('Total da venda:', totalVenda);
+
+      // Se não há venda, desabilita o botão e mostra aviso
+      if (totalVenda === 0) {
+        btnFinalizar.disabled = true;
+        btnFinalizar.textContent = '⚠️ Nenhuma venda em andamento';
+        btnFinalizar.style.backgroundColor = '#999';
+        alert('⚠️ Nenhuma venda em andamento!\n\nVolte ao PDV e finalize uma venda primeiro.');
+        setTimeout(() => {
+          window.location.href = '/venda/ponto_venda/';
+        }, 2000);
+        return;
+      }
+
+      // Função para obter CSRF token
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
+      // Formatar valor para moeda brasileira
+      function formatarMoeda(valor) {
+        if (isNaN(valor)) valor = 0;
+        return valor.toLocaleString('pt-BR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      }
+
+      // Converter string para número
+      function stringParaNumero(str) {
+        if (!str || str === '') return 0;
+        let numero = str.replace(/[^\d,]/g, '');
+        numero = numero.replace(',', '.');
+        return parseFloat(numero) || 0;
+      }
+
+      // Aplicar máscara de moeda em tempo real
+      function aplicarMascaraMoeda(input) {
+        input.addEventListener('input', (e) => {
+          let valor = e.target.value;
+          valor = valor.replace(/\D/g, '');
+
+          if (valor === '' || valor === '0') {
+            e.target.value = '0,00';
+            calcularTotalETroco();
+            return;
+          }
+
+          let numero = parseInt(valor);
+          numero = (numero / 100).toFixed(2);
+          let partes = numero.split('.');
+          let inteiro = partes[0];
+          let decimal = partes[1];
+          inteiro = inteiro.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          e.target.value = inteiro + ',' + decimal;
+          calcularTotalETroco();
+        });
+
+        input.addEventListener('focus', (e) => {
+          e.target.select();
+        });
+
+        input.addEventListener('blur', (e) => {
+          if (e.target.value === '' || e.target.value === '0') {
+            e.target.value = '0,00';
+          }
+          calcularTotalETroco();
+        });
+      }
+
+      // Calcular total pago e troco
+      function calcularTotalETroco() {
+        const dinheiro = stringParaNumero(dinheiroInput.value);
+        const cartao = stringParaNumero(cartaoInput.value);
+        const cheque = stringParaNumero(chequeInput.value);
+
+        const totalPago = dinheiro + cartao + cheque;
+        totalInput.value = formatarMoeda(totalPago);
+
+        let troco = 0;
+        if (totalVenda > 0) {
+          troco = totalPago - totalVenda;
+        }
+
+        trocoInput.value = formatarMoeda(Math.max(0, troco));
+
+        // Feedback visual
+        if (totalVenda > 0) {
+          if (totalPago < totalVenda) {
+            totalInput.style.borderColor = '#ff4444';
+            trocoInput.style.borderColor = '#ff4444';
+          } else if (totalPago > totalVenda) {
+            totalInput.style.borderColor = '#4CAF50';
+            trocoInput.style.borderColor = '#4CAF50';
+          } else {
+            totalInput.style.borderColor = '#2196F3';
+            trocoInput.style.borderColor = '#2196F3';
+          }
+        }
+      }
+
+      // Aplicar máscaras
+      aplicarMascaraMoeda(dinheiroInput);
+      aplicarMascaraMoeda(cartaoInput);
+      aplicarMascaraMoeda(chequeInput);
+
+      // Duplo clique preenche valor exato
+      dinheiroInput.addEventListener('dblclick', () => {
+        if (totalVenda > 0) {
+          dinheiroInput.value = formatarMoeda(totalVenda);
+          cartaoInput.value = '0,00';
+          chequeInput.value = '0,00';
+          calcularTotalETroco();
+        }
+      });
+
+      // Finalizar pagamento
+      btnFinalizar.addEventListener('click', async () => {
+        console.log('Botão finalizar clicado!');
+
+        const dinheiro = stringParaNumero(dinheiroInput.value);
+        const cartao = stringParaNumero(cartaoInput.value);
+        const cheque = stringParaNumero(chequeInput.value);
+        const observacoes = obsTextarea.value.trim();
+
+        const totalPago = dinheiro + cartao + cheque;
+
+        console.log('Valores:', { dinheiro, cartao, cheque, totalPago, totalVenda });
+
+        // Validações
+        if (totalPago === 0) {
+          alert('⚠️ Informe pelo menos um meio de pagamento!');
+          dinheiroInput.focus();
+          return;
+        }
+
+        if (totalVenda > 0 && totalPago < totalVenda) {
+          const diferenca = totalVenda - totalPago;
+          const confirmar = confirm(
+            `⚠️ Valor insuficiente!\n\n` +
+            `Total da venda: R$ ${formatarMoeda(totalVenda)}\n` +
+            `Total pago: R$ ${formatarMoeda(totalPago)}\n` +
+            `Faltam: R$ ${formatarMoeda(diferenca)}\n\n` +
+            `Deseja continuar mesmo assim?`
+          );
+
+          if (!confirmar) {
+            return;
+          }
+        }
+
+        btnFinalizar.disabled = true;
+        btnFinalizar.textContent = 'Processando...';
+
+        try {
+          console.log('Enviando requisição...');
+
+          const response = await fetch('/venda/processar_pagamento/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+              dinheiro: dinheiro,
+              cartao: cartao,
+              cheque: cheque,
+              observacoes: observacoes
+            })
+          });
+
+          console.log('Resposta recebida:', response.status);
+
+          const data = await response.json();
+          console.log('Dados:', data);
+
+          if (response.ok) {
+            const troco = data.troco || 0;
+
+            let mensagem = '✅ Pagamento processado com sucesso!\n\n';
+            mensagem += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            mensagem += `Total da venda: R$ ${formatarMoeda(totalVenda)}\n`;
+            mensagem += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+
+            if (dinheiro > 0) mensagem += `💵 Dinheiro: R$ ${formatarMoeda(dinheiro)}\n`;
+            if (cartao > 0) mensagem += `💳 Cartão: R$ ${formatarMoeda(cartao)}\n`;
+            if (cheque > 0) mensagem += `📄 Cheque: R$ ${formatarMoeda(cheque)}\n`;
+
+            mensagem += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+            mensagem += `Total pago: R$ ${formatarMoeda(totalPago)}\n`;
+
+            if (troco > 0) {
+              mensagem += `\n💰 TROCO: R$ ${formatarMoeda(troco)}`;
+            } else if (totalPago === totalVenda) {
+              mensagem += `\n✔️ Valor exato!`;
+            }
+
+            alert(mensagem);
+            window.location.href = '/venda/ponto_venda/';
+          } else {
+            alert('❌ Erro: ' + (data.erro || 'Erro ao processar pagamento'));
+            btnFinalizar.disabled = false;
+            btnFinalizar.textContent = 'Finalizar Venda';
+          }
+        } catch (error) {
+          console.error('Erro ao processar pagamento:', error);
+          alert('❌ Erro ao conectar com o servidor. Tente novamente.');
+          btnFinalizar.disabled = false;
+          btnFinalizar.textContent = 'Finalizar Venda';
+        }
+      });
+
+      // Atalhos de teclado
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'Enter') {
+          btnFinalizar.click();
+        }
+
+        if (e.key === 'Escape') {
+          if (confirm('Deseja voltar ao PDV sem finalizar?')) {
+            window.location.href = '/venda/ponto_venda/';
+          }
+        }
+      });
+
+      // Focar no primeiro campo
+      setTimeout(() => {
+        dinheiroInput.focus();
+        dinheiroInput.select();
+      }, 100);
+
+      // Calcular inicialmente
+      calcularTotalETroco();
+
+      console.log('💡 Dica: Dê duplo clique no campo Dinheiro para preencher o valor exato');
+      console.log('⌨️ Atalhos: Ctrl+Enter = Finalizar | ESC = Voltar');
+    });
+  </script>
+</body>
+
+</html>

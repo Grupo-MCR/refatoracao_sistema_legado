@@ -1,0 +1,319 @@
+/* ===================== */
+/* ESTILO GERAL */
+/* ===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: #111;
+  color: #fff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* ===================== */
+/* MENU LATERAL */
+/* ===================== */
+.sidebar {
+  width: 250px;
+  background: #0d0d0d;
+  border-right: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-header h2 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.menu-icon {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 10px 0;
+}
+
+.menu-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  /* ← agora anima todas as propriedades */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #a3a3a3;
+  /* ← cor padrão adicionada */
+}
+
+
+.menu-item:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  /* ← texto fica branco no hover */
+}
+
+.menu-item.active {
+  background: #ff6b35;
+  color: #fff;
+}
+
+.menu-item svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #2a2a2a;
+}
+
+/* ===================== */
+/* CONTEÚDO PRINCIPAL */
+/* ===================== */
+.content {
+  flex: 1;
+  background-color: #1e1e1e;
+  padding: 40px 60px;
+}
+
+h1 {
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* ===================== */
+/* FORMULÁRIOS */
+/* ===================== */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full {
+  width: 100%;
+}
+
+label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+input {
+  background-color: #111;
+  border: 1px solid #333;
+  padding: 10px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+input::placeholder {
+  color: #777;
+}
+
+/* ===================== */
+/* BOTÕES */
+/* ===================== */
+.btn {
+  background-color: #ff7b00;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 200px;
+  align-self: center;
+  transition: 0.3s;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: #e56f00;
+}
+
+/* Botões da lista de fornecedores */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.btn-editar {
+  background-color: #444;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.btn-editar:hover {
+  background-color: #ff7b00;
+}
+
+/* ===================== */
+/* LISTAGEM EM TABELA */
+/* ===================== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #111;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #ff7b00;
+  color: #fff;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.table tr:nth-child(even) {
+  background-color: #1c1c1c;
+}
+
+.table tr:hover {
+  background-color: #2a2a2a;
+}
+
+/* ===================== */
+/* CARTÕES (para futuras telas) */
+/* ===================== */
+.supplier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.supplier-card {
+  background-color: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.supplier-info h3 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.info-row {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.info-row p {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.actions-card {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  background-color: #ff7b00;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.edit-btn:hover {
+  background-color: #e56f00;
+}
+
+.delete-btn {
+  background-color: #333;
+}
+
+.delete-btn:hover {
+  background-color: #444;
+}
+
+/* ===================== */
+/* RESPONSIVIDADE */
+/* ===================== */
+@media (max-width: 900px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 180px;
+  }
+
+  .content {
+    padding: 30px 20px;
+  }
+
+  .table th,
+  .table td {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
